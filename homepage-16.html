@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sunsong Cinema</title>
+<meta name="description" content="Film is like love, give it and it's a gift that keeps giving.">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Cinzel:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--black:#080705;--warm:#0e0c09;--gold:#c8a44a;--gl:#e5d098;--gd:rgba(200,164,74,0.1);--cream:#f2ebe0;--dim:#635a4f;--text:#e0d8cc;--border:rgba(200,164,74,0.12)}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--black);color:var(--text);font-family:"DM Sans",sans-serif;font-weight:300;min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:0.3;mix-blend-mode:overlay}
+
+/* HEADER */
+header{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 48px;display:flex;justify-content:space-between;align-items:center;background:linear-gradient(to bottom,rgba(8,7,5,0.95) 0%,transparent 100%);transition:background 0.4s}
+header.scrolled{background:rgba(8,7,5,0.97);border-bottom:1px solid var(--border)}
+.logo{font-family:"Cinzel",serif;font-size:17px;font-weight:600;letter-spacing:0.2em;color:var(--gold);text-decoration:none}
+.logo span{color:var(--cream);font-weight:400}
+nav{display:flex;gap:32px;align-items:center}
+nav a{font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--dim);text-decoration:none;transition:color 0.2s}
+nav a:hover{color:var(--gold)}
+.nav-cta{background:var(--gold);color:var(--black)!important;padding:9px 22px}
+.nav-cta:hover{background:var(--gl)!important}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;padding:120px 48px 80px;text-align:center;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(122,58,16,.15) 0%,transparent 50%),radial-gradient(ellipse at 80% 30%,rgba(200,164,74,.07) 0%,transparent 45%),radial-gradient(ellipse at 50% 80%,rgba(60,30,10,.2) 0%,transparent 60%)}
+.hero-lines{position:absolute;inset:0;background-image:linear-gradient(rgba(200,164,74,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(200,164,74,.03) 1px,transparent 1px);background-size:80px 80px;mask-image:radial-gradient(ellipse at center,black 20%,transparent 75%)}
+.hero-content{position:relative;z-index:2;max-width:860px}
+.hero-eyebrow{font-size:10px;letter-spacing:0.32em;text-transform:uppercase;color:var(--gold);margin-bottom:28px;display:flex;align-items:center;justify-content:center;gap:16px;opacity:0;animation:fadeUp 1s 0.2s forwards}
+.hero-eyebrow::before,.hero-eyebrow::after{content:'';width:40px;height:1px;background:var(--gold);opacity:.4}
+.hero-title{font-family:"Cormorant Garamond",serif;font-size:clamp(32px,4.5vw,64px);font-weight:300;line-height:1.05;color:var(--cream);margin-bottom:4px;opacity:0;animation:fadeUp 1.2s 0.4s forwards}
+.hero-title em{font-style:italic;color:var(--gl)}
+.hero-title-2{font-family:"Cormorant Garamond",serif;font-size:clamp(32px,4.5vw,64px);font-weight:300;line-height:1.05;color:var(--cream);margin-bottom:44px;opacity:0;animation:fadeUp 1.2s 0.6s forwards}
+.hero-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;opacity:0;animation:fadeUp 1s 0.8s forwards}
+.btn-primary{background:var(--gold);color:var(--black);border:none;padding:16px 44px;font-family:"DM Sans",sans-serif;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:10px;transition:all 0.25s}
+.btn-primary:hover{background:var(--gl);transform:translateY(-2px)}
+.btn-secondary{background:transparent;color:var(--text);border:1px solid var(--border);padding:16px 44px;font-family:"DM Sans",sans-serif;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:10px;transition:all 0.25s}
+.btn-secondary:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-2px)}
+.hero-scroll{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;animation:fadeIn 1s 1.4s forwards}
+.scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,var(--gold),transparent);animation:scrollPulse 2s ease-in-out infinite}
+.scroll-text{font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--dim)}
+@keyframes scrollPulse{0%,100%{opacity:.4}50%{opacity:1}}
+
+/* COLLECTIONS */
+.collections{padding:100px 48px;position:relative}
+.collections::after{content:'';position:absolute;bottom:0;left:48px;right:48px;height:1px;background:linear-gradient(to right,transparent,var(--gold),transparent);opacity:.15}
+.coll-inner{max-width:1200px;margin:0 auto}
+.coll-intro{font-family:"Cormorant Garamond",serif;font-size:clamp(22px,3vw,38px);font-style:italic;color:var(--dim);line-height:1.55;margin-bottom:60px;max-width:800px}
+.coll-item{border-top:1px solid var(--border);padding:48px 0}
+.coll-item:last-child{border-bottom:1px solid var(--border)}
+
+/* 4-column grid, all cards equal */
+.coll-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.coll-grid-row2{margin-top:20px}
+
+/* Title card — same size as film card, text fills entire card */
+.coll-title-card{
+  aspect-ratio:2/3;
+  background:linear-gradient(145deg,#12100a,#1c1810);
+  border:1px solid rgba(200,164,74,0.3);
+  padding:20px 18px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:flex-start;
+  position:relative;
+  overflow:hidden;
+  cursor:default;
+}
+.coll-title-card::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(ellipse at 10% 90%,rgba(200,164,74,0.14) 0%,transparent 55%),
+    radial-gradient(ellipse at 90% 10%,rgba(200,100,20,0.08) 0%,transparent 50%);
+}
+.ctc-top{
+  position:absolute;
+  top:18px;
+  left:18px;
+  right:18px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  z-index:2;
+}
+.ctc-num{
+  font-family:"Cinzel",serif;
+  font-size:9px;
+  color:rgba(200,164,74,0.5);
+  letter-spacing:0.24em;
+}
+.ctc-label{
+  font-size:7px;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  color:rgba(200,164,74,0.25);
+}
+.ctc-bg-num{
+  position:absolute;
+  font-family:"Cinzel",serif;
+  font-size:120px;
+  font-weight:700;
+  color:rgba(200,164,74,0.05);
+  line-height:1;
+  bottom:-8px;
+  right:-4px;
+  z-index:1;
+  user-select:none;
+  pointer-events:none;
+}
+.ctc-bottom{
+  position:relative;
+  z-index:2;
+  width:100%;
+}
+.ctc-name{
+  font-family:"Cormorant Garamond",serif;
+  font-size:clamp(20px,2.2vw,30px);
+  font-weight:400;
+  color:var(--cream);
+  line-height:1.15;
+  margin-bottom:14px;
+}
+.ctc-divider{
+  width:28px;
+  height:1px;
+  background:var(--gold);
+  opacity:0.6;
+  margin-bottom:12px;
+}
+.ctc-genre{
+  font-family:"Cormorant Garamond",serif;
+  font-size:26px;
+  font-style:italic;
+  color:var(--gold);
+  line-height:1.3;
+}
+
+/* Film cards */
+.film-card{display:flex;flex-direction:column;text-decoration:none;transition:transform 0.25s;cursor:pointer}
+.film-card:hover{transform:translateY(-4px)}
+.film-poster{aspect-ratio:2/3;border:1px solid var(--border);overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;margin-bottom:10px;transition:border-color 0.25s}
+.film-card:hover .film-poster{border-color:rgba(200,164,74,.5)}
+.film-poster-bg{position:absolute;inset:0;opacity:.75}
+.film-poster-sym{font-family:"Cormorant Garamond",serif;font-size:40px;opacity:.09;color:var(--cream);position:relative;z-index:1;user-select:none}
+.film-play{position:absolute;bottom:8px;right:8px;width:32px;height:32px;background:var(--gold);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--black);opacity:0;transition:opacity 0.2s;z-index:2}
+.film-card:hover .film-play{opacity:1}
+.film-title{font-family:"Cormorant Garamond",serif;font-size:17px;color:var(--text);line-height:1.3;transition:color 0.2s}
+.film-card:hover .film-title{color:var(--gl)}
+.film-year{font-size:11px;color:var(--dim);margin-top:4px;letter-spacing:.06em}
+
+/* FILM MODAL */
+.film-modal{
+  position:fixed;inset:0;z-index:1000;
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;
+  transition:opacity 0.35s ease;
+}
+.film-modal.active{opacity:1;pointer-events:all}
+.film-modal-backdrop{
+  position:absolute;inset:0;
+  background:rgba(4,3,2,0.88);
+  backdrop-filter:blur(6px);
+  cursor:pointer;
+}
+.film-modal-box{
+  position:relative;z-index:2;
+  background:var(--warm);
+  border:1px solid rgba(200,164,74,0.2);
+  width:90%;max-width:880px;
+  max-height:92vh;overflow-y:auto;
+  display:flex;
+  transform:translateY(30px);
+  transition:transform 0.35s ease;
+}
+.film-modal.active .film-modal-box{transform:translateY(0)}
+.fm-close{
+  position:absolute;top:20px;right:20px;z-index:3;
+  background:none;border:1px solid rgba(200,164,74,0.2);
+  color:var(--dim);width:36px;height:36px;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:16px;
+  transition:all 0.2s;
+}
+.fm-close:hover{border-color:var(--gold);color:var(--gold)}
+.fm-poster-col{
+  flex-shrink:0;width:260px;
+  position:relative;
+}
+.fm-poster{
+  width:100%;height:100%;min-height:380px;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+}
+.fm-poster-sym{
+  font-family:"Cormorant Garamond",serif;
+  font-size:80px;opacity:0.1;color:var(--cream);
+  user-select:none;
+}
+.fm-poster-badge{
+  position:absolute;bottom:0;left:0;right:0;
+  background:linear-gradient(to top,rgba(8,7,5,0.9),transparent);
+  padding:24px 16px 16px;
+  font-size:10px;letter-spacing:0.16em;text-transform:uppercase;
+  color:rgba(200,164,74,0.7);
+}
+.fm-info-col{
+  flex:1;padding:40px 40px 40px 36px;
+  border-left:1px solid rgba(200,164,74,0.1);
+  display:flex;flex-direction:column;gap:0;
+}
+.fm-meta{
+  font-size:11px;letter-spacing:0.16em;text-transform:uppercase;
+  color:var(--dim);margin-bottom:10px;
+}
+.fm-title{
+  font-family:"Cormorant Garamond",serif;
+  font-size:clamp(32px,4vw,52px);
+  font-weight:300;color:var(--cream);
+  line-height:1.05;margin-bottom:8px;
+}
+.fm-director{
+  font-family:"Cormorant Garamond",serif;
+  font-size:16px;font-style:italic;
+  color:var(--gold);margin-bottom:24px;
+}
+.fm-divider{width:100%;height:1px;background:var(--border);margin:20px 0}
+.fm-label{
+  font-size:9px;letter-spacing:0.24em;text-transform:uppercase;
+  color:rgba(200,164,74,0.4);margin-bottom:12px;
+}
+.fm-sunsong{
+  font-family:"Cormorant Garamond",serif;
+  font-size:18px;font-style:italic;
+  color:rgba(224,216,204,0.75);line-height:1.7;
+}
+.fm-links{display:flex;flex-direction:column;gap:10px;margin-top:4px}
+.fm-btn{
+  display:flex;align-items:center;gap:12px;
+  text-decoration:none;padding:14px 20px;
+  font-family:"DM Sans",sans-serif;
+  transition:all 0.22s;cursor:pointer;border:none;
+}
+.fm-btn-primary{
+  background:var(--gold);color:var(--black);
+  font-size:13px;font-weight:500;letter-spacing:0.08em;
+}
+.fm-btn-primary:hover{background:var(--gl)}
+.fm-btn-icon{font-size:12px}
+.fm-btn-secondary{
+  background:rgba(255,255,255,0.03);
+  border:1px solid var(--border);
+  color:var(--text);
+  font-size:13px;flex-direction:column;align-items:flex-start;gap:2px;
+}
+.fm-btn-secondary:hover{border-color:rgba(200,164,74,0.4);color:var(--cream)}
+.fm-btn-sub{font-size:10px;color:var(--dim);letter-spacing:0.1em}
+.fm-btn-ghost{
+  color:var(--dim);font-size:12px;letter-spacing:0.1em;
+  border-top:1px solid var(--border);padding:12px 0 0;
+  background:none;
+}
+.fm-btn-ghost:hover{color:var(--gold)}
+.fm-commission{font-size:9px;opacity:0.6;letter-spacing:0.08em;margin-left:6px;font-weight:300}
+.fm-share-row{
+  display:flex;align-items:center;gap:10px;
+  flex-wrap:wrap;margin-top:20px;
+  padding-top:20px;border-top:1px solid var(--border);
+}
+.fm-share-label{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--dim)}
+.fm-share-btn{
+  background:none;border:1px solid var(--border);
+  color:var(--dim);padding:7px 14px;
+  font-size:11px;letter-spacing:0.1em;
+  cursor:pointer;font-family:"DM Sans",sans-serif;
+  transition:all 0.2s;
+}
+.fm-share-btn:hover{border-color:var(--gold);color:var(--gold)}
+@media(max-width:680px){
+  .film-modal-box{flex-direction:column;max-height:96vh}
+  .fm-poster-col{width:100%;height:200px}
+  .fm-poster{min-height:200px}
+  .fm-info-col{padding:24px}
+}
+
+/* SATELLITE */
+.coll-satellite{
+  margin-top:40px;
+  background: radial-gradient(ellipse at 20% 50%, rgba(200,130,20,0.15) 0%, transparent 55%),
+              radial-gradient(ellipse at 80% 50%, rgba(200,164,74,0.05) 0%, transparent 50%),
+              var(--warm);
+  border:1px solid rgba(200,164,74,0.25);
+  position:relative;
+  overflow:hidden;
+  min-height:280px;
+  display:flex;
+  align-items:center;
+  gap:0;
+}
+.coll-satellite::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background: repeating-conic-gradient(
+    from 0deg at 14% 50%,
+    rgba(200,164,74,0.03) 0deg,
+    transparent 5deg,
+    transparent 18deg
+  );
+  pointer-events:none;
+}
+.sat-sun{
+  flex-shrink:0;
+  width:200px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  padding:40px 30px;
+}
+.sat-orb{
+  position:relative;
+  width:110px;
+  height:110px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.sat-orb-ring{
+  position:absolute;
+  border-radius:50%;
+  border:1px solid rgba(200,164,74,0.25);
+  animation:orbitPulse 4s ease-in-out infinite;
+}
+.sat-orb-ring-1{width:100%;height:100%;animation-delay:0s}
+.sat-orb-ring-2{width:160%;height:160%;animation-delay:0.7s;border-color:rgba(200,164,74,0.14)}
+.sat-orb-ring-3{width:230%;height:230%;animation-delay:1.4s;border-color:rgba(200,164,74,0.07)}
+@keyframes orbitPulse{
+  0%,100%{transform:scale(1);opacity:0.6}
+  50%{transform:scale(1.05);opacity:1}
+}
+.sat-orb-core{
+  font-size:64px;
+  position:relative;
+  z-index:2;
+  color:var(--gold);
+  animation:sunGlow 3s ease-in-out infinite;
+  filter:drop-shadow(0 0 16px rgba(200,164,74,0.7));
+}
+@keyframes sunGlow{
+  0%,100%{filter:drop-shadow(0 0 12px rgba(200,164,74,0.5));color:#c8a44a}
+  50%{filter:drop-shadow(0 0 30px rgba(229,208,152,0.9));color:#e5d098}
+}
+.sat-content{
+  flex:1;
+  padding:48px 40px;
+  position:relative;
+  z-index:2;
+  border-left:1px solid rgba(200,164,74,0.12);
+}
+.sat-title{
+  font-family:"Cormorant Garamond",serif;
+  font-size:clamp(48px,6vw,88px);
+  font-weight:300;
+  line-height:0.95;
+  color:var(--cream);
+  margin-bottom:28px;
+  font-style:italic;
+}
+.sat-desc{
+  font-family:"Cormorant Garamond",serif;
+  font-size:clamp(16px,1.6vw,20px);
+  font-style:italic;
+  color:rgba(224,216,204,0.5);
+  line-height:1.75;
+  max-width:500px;
+}
+.sat-film{
+  flex-shrink:0;
+  padding:40px 40px 40px 32px;
+  width:180px;
+  position:relative;
+  z-index:2;
+  border-left:1px solid rgba(200,164,74,0.12);
+  display:flex;
+  align-items:center;
+}
+.sat-film-sym{
+  font-size:48px;
+  opacity:0.25;
+  color:var(--gold);
+  position:relative;
+  z-index:1;
+  user-select:none;
+  animation:sunGlow 3s ease-in-out infinite;
+}
+@media(max-width:900px){
+  .coll-satellite{flex-direction:column;min-height:auto}
+  .sat-sun{width:100%;padding:40px 0 20px}
+  .sat-content{padding:24px;border-left:none;border-top:1px solid rgba(200,164,74,0.12)}
+  .sat-film{width:100%;padding:24px;border-left:none;border-top:1px solid rgba(200,164,74,0.12);justify-content:center}
+  .sat-film .film-card{width:140px}
+}
+
+/* MANIFESTO */
+.manifesto{padding:100px 48px;max-width:1200px;margin:0 auto;position:relative}
+.manifesto::before{content:'';position:absolute;top:0;left:48px;right:48px;height:1px;background:linear-gradient(to right,transparent,var(--gold),transparent);opacity:.2}
+.manifesto-inner{display:grid;grid-template-columns:200px 1fr;gap:80px;align-items:start}
+.manifesto-label{font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);padding-top:6px;position:sticky;top:100px}
+.manifesto-label::after{content:'';display:block;width:30px;height:1px;background:var(--gold);margin-top:12px;opacity:.4}
+.manifesto-text{font-family:"Cormorant Garamond",serif;font-size:clamp(16px,1.6vw,20px);font-weight:300;line-height:1.8;color:var(--cream)}
+.manifesto-text .hl{font-style:italic;color:var(--gl)}
+.manifesto-text p{margin-bottom:24px}
+.manifesto-text p:last-child{margin-bottom:0}
+.manifesto-closing{font-family:"Cormorant Garamond",serif;font-size:18px;font-style:italic;color:rgba(200,164,74,.6);margin-top:40px;padding-top:40px;border-top:1px solid var(--border);text-align:right}
+
+/* SHARE */
+.share-section{padding:100px 48px;background:var(--warm);position:relative;overflow:hidden}
+.share-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 100%,rgba(200,164,74,.05) 0%,transparent 60%)}
+.share-inner{max-width:800px;margin:0 auto;text-align:center;position:relative;z-index:2}
+.share-eyebrow{font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;display:flex;align-items:center;justify-content:center;gap:12px}
+.share-eyebrow::before,.share-eyebrow::after{content:'';width:30px;height:1px;background:var(--gold);opacity:.4}
+.share-title{font-family:"Cormorant Garamond",serif;font-size:clamp(30px,4vw,50px);font-weight:300;color:var(--cream);line-height:1.15;margin-bottom:16px}
+.share-title em{font-style:italic;color:var(--gl)}
+.share-sub{font-size:15px;color:var(--dim);line-height:1.7;margin-bottom:40px;max-width:520px;margin-left:auto;margin-right:auto}
+.share-input-wrap{background:rgba(255,255,255,.02);border:1px solid var(--border);padding:20px 24px;margin-bottom:24px;transition:border-color .3s}
+.share-input-wrap:focus-within{border-color:rgba(200,164,74,.4)}
+.share-input-label{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin-bottom:8px;text-align:left}
+.share-input{width:100%;background:transparent;border:none;outline:none;color:var(--text);font-size:16px;font-family:"Cormorant Garamond",serif;font-style:italic;font-weight:300}
+.share-input::placeholder{color:rgba(99,90,79,.4)}
+.share-channels{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px}
+.share-ch{display:flex;flex-direction:column;align-items:center;gap:8px;padding:18px 12px;border:1px solid var(--border);background:transparent;color:var(--dim);cursor:pointer;transition:all .22s;font-family:"DM Sans",sans-serif;text-decoration:none}
+.share-ch:hover{border-color:var(--gold);color:var(--gold);background:var(--gd)}
+.share-ch-icon{font-size:20px}
+.share-ch-name{font-size:10px;letter-spacing:.12em;text-transform:uppercase}
+.share-more{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.share-more-btn{display:flex;align-items:center;gap:8px;padding:10px 18px;border:1px solid var(--border);background:transparent;color:var(--dim);cursor:pointer;transition:all .22s;font-family:"DM Sans",sans-serif;font-size:11px;letter-spacing:.1em;text-decoration:none}
+.share-more-btn:hover{border-color:var(--gold);color:var(--gold)}
+.copy-link-row{display:flex;margin-top:16px}
+.copy-link-input{flex:1;background:rgba(255,255,255,.02);border:1px solid var(--border);border-right:none;color:var(--dim);padding:12px 16px;font-size:12px;font-family:"DM Sans",sans-serif;outline:none}
+.copy-link-btn{background:rgba(200,164,74,.12);border:1px solid rgba(200,164,74,.3);color:var(--gold);padding:12px 24px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;font-family:"DM Sans",sans-serif;transition:all .2s;white-space:nowrap}
+.copy-link-btn:hover{background:rgba(200,164,74,.2)}
+.share-success{display:none;background:rgba(30,100,50,.15);border:1px solid rgba(50,180,100,.2);padding:14px 20px;font-size:13px;color:#70e0a0;margin-top:12px;text-align:center}
+.share-success.visible{display:block}
+
+/* FIND */
+.find-section{padding:120px 48px;text-align:center;position:relative}
+.find-inner{max-width:720px;margin:0 auto}
+.find-eyebrow{font-size:10px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;display:flex;align-items:center;justify-content:center;gap:16px}
+.find-eyebrow::before,.find-eyebrow::after{content:'';width:40px;height:1px;background:var(--gold);opacity:.4}
+.find-title{font-family:"Cormorant Garamond",serif;font-size:clamp(32px,4.5vw,60px);font-weight:300;color:var(--cream);line-height:1.1;margin-bottom:20px}
+.find-title em{font-style:italic;color:var(--gl)}
+.find-sub{font-size:15px;color:var(--dim);line-height:1.75;margin-bottom:40px;max-width:600px;margin-left:auto;margin-right:auto}
+
+/* FOOTER */
+/* COFFEE */
+.coffee-section{padding:60px 48px;border-top:1px solid var(--border)}
+.coffee-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:32px;flex-wrap:wrap}
+.coffee-icon{font-size:36px;flex-shrink:0;animation:sunGlow 3s ease-in-out infinite}
+.coffee-text{flex:1}
+.coffee-title{font-family:"Cormorant Garamond",serif;font-size:clamp(18px,2vw,26px);font-style:italic;color:var(--cream);line-height:1.4}
+.coffee-sub{font-family:"Cormorant Garamond",serif;font-size:15px;font-style:italic;color:var(--dim);margin-top:4px}
+.coffee-btn{flex-shrink:0;background:var(--gold);color:var(--black);text-decoration:none;padding:14px 32px;font-family:"DM Sans",sans-serif;font-size:12px;letter-spacing:0.14em;text-transform:uppercase;transition:all 0.25s;white-space:nowrap}
+.coffee-btn:hover{background:var(--gl);transform:translateY(-2px)}
+@media(max-width:600px){.coffee-section{padding:48px 24px}.coffee-inner{justify-content:center;text-align:center}}
+
+/* FOOTER */
+footer{padding:40px 48px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px}
+.footer-logo{font-family:"Cinzel",serif;font-size:14px;color:var(--gold);letter-spacing:.16em}
+.footer-tagline{font-family:"Cormorant Garamond",serif;font-size:13px;font-style:italic;color:var(--dim)}
+.footer-links{display:flex;gap:24px}
+.footer-links a{font-size:11px;color:var(--dim);text-decoration:none;transition:color .2s}
+.footer-links a:hover{color:var(--gold)}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.8s ease,transform 0.8s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  header{padding:18px 24px}
+  .hero{padding:100px 24px 60px}
+  .collections{padding:80px 24px}
+  .coll-grid{grid-template-columns:repeat(2,1fr)}
+  .coll-title-card{grid-column:1/3;grid-row:auto;min-height:auto;padding:24px}
+  .manifesto{padding:80px 24px}
+  .manifesto-inner{grid-template-columns:1fr;gap:32px}
+  .manifesto-label{position:static}
+  .share-section{padding:80px 24px}
+  .find-section{padding:80px 24px}
+  footer{padding:32px 24px;flex-direction:column;text-align:center}
+  .sat-inner{flex-direction:column;gap:16px;align-items:flex-start}
+  .sat-desc{border-left:none;padding-left:0;border-top:1px solid rgba(200,164,74,.2);padding-top:16px}
+}
+</style>
+</head>
+<body>
+
+<header id="hdr">
+  <a href="/" class="logo">Sunsong <span>Cinema</span></a>
+  <nav>
+    <a href="#collections">Collections</a>
+    <a href="#share">Share</a>
+    <a href="find.html" class="nav-cta">Find My Film</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-lines"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">World Cinema</div>
+    <div class="hero-title">Film is like <em>love,</em> give it</div>
+    <div class="hero-title-2">and you get a gift that keeps giving.</div>
+    <div class="hero-actions">
+      <a href="find.html" class="btn-primary">Find My Film →</a>
+      <a href="#share" class="btn-secondary">Share a Film</a>
+    </div>
+  </div>
+  <div class="hero-scroll"><div class="scroll-line"></div><div class="scroll-text">Scroll</div></div>
+</section>
+
+<section class="collections" id="collections">
+  <div class="coll-inner">
+    <p class="coll-intro reveal">we cannot look directly at the sun — so sunsong cinema offers eight collections orbiting it like planets</p>
+
+
+
+    <!-- 01 -->
+    <div class="coll-item reveal">
+      <div class="coll-grid">
+        <div class="coll-title-card">
+          <div class="ctc-top"><div class="ctc-num">Collectie 01</div><div class="ctc-label">Sunsong Cinema</div></div>
+          <div class="ctc-bg-num">01</div>
+          <div class="ctc-bottom"><div class="ctc-name">The Magnificent Seven</div><div class="ctc-divider"></div><div class="ctc-genre">Seven Classics</div></div>
+        </div>
+        <a class="film-card" href="#" onclick="event.preventDefault();openFilmModal('Tokyo Story')"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0a1520,#1a3040)"></div><div class="film-poster-sym">映</div><div class="film-play">▶</div></div><div class="film-title">Tokyo Story</div><div class="film-year">1953</div></a><a class="film-card" href="#" onclick="event.preventDefault();openFilmModal('Bicycle Thieves')"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#1a1208,#3d2b0a)"></div><div class="film-poster-sym">自</div><div class="film-play">▶</div></div><div class="film-title">Bicycle Thieves</div><div class="film-year">1948</div></a><a class="film-card" href="#" onclick="event.preventDefault();openFilmModal('Rashomon')"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0d1a0d,#122a12)"></div><div class="film-poster-sym">羅</div><div class="film-play">▶</div></div><div class="film-title">Rashomon</div><div class="film-year">1950</div></a>
+      </div>
+      <div class="coll-grid coll-grid-row2">
+        <a class="film-card" href="#" onclick="event.preventDefault();openFilmModal('The 400 Blows')"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#1a0d0d,#2a1215)"></div><div class="film-poster-sym">四</div><div class="film-play">▶</div></div><div class="film-title">The 400 Blows</div><div class="film-year">1959</div></a><a class="film-card" href="#" onclick="event.preventDefault();openFilmModal('8½')"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#150d1a,#20122a)"></div><div class="film-poster-sym">8½</div><div class="film-play">▶</div></div><div class="film-title">8½</div><div class="film-year">1963</div></a><a class="film-card" href="#" onclick="event.preventDefault();openFilmModal('Breathless')"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0f0f12,#1a1a20)"></div><div class="film-poster-sym">À</div><div class="film-play">▶</div></div><div class="film-title">Breathless</div><div class="film-year">1960</div></a><a class="film-card" href="#" onclick="event.preventDefault();openFilmModal('Stalker')"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0a1215,#152030)"></div><div class="film-poster-sym">Ст</div><div class="film-play">▶</div></div><div class="film-title">Stalker</div><div class="film-year">1979</div></a>
+      </div>
+    </div>
+
+    <!-- 02 -->
+    <div class="coll-item reveal">
+      <div class="coll-grid">
+        <div class="coll-title-card">
+          <div class="ctc-top"><div class="ctc-num">Collectie 02</div><div class="ctc-label">Sunsong Cinema</div></div>
+          <div class="ctc-bg-num">02</div>
+          <div class="ctc-bottom"><div class="ctc-name">We Can Even Make a Pillar of Salt Laugh</div><div class="ctc-divider"></div><div class="ctc-genre">Seven Comedies</div></div>
+        </div>
+        <a class="film-card" href="#" onclick="event.preventDefault();openFilmModal('Some Like It Hot')"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#1a1208,#3d2b0a)"></div><div class="film-poster-sym">♨</div><div class="film-play">▶</div></div><div class="film-title">Some Like It Hot</div><div class="film-year">1959</div></a><a class="film-card" href="#" onclick="event.preventDefault();openFilmModal('The Grand Budapest Hotel')"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0a1520,#1a3040)"></div><div class="film-poster-sym">∞</div><div class="film-play">▶</div></div><div class="film-title">The Grand Budapest Hotel</div><div class="film-year">2014</div></a><a class="film-card" href="#" onclick="event.preventDefault();openFilmModal('Amélie')"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#150d1a,#20122a)"></div><div class="film-poster-sym">Â</div><div class="film-play">▶</div></div><div class="film-title">Amélie</div><div class="film-year">2001</div></a>
+      </div>
+      <div class="coll-grid coll-grid-row2">
+        <a class="film-card" href="#" onclick="event.preventDefault();openFilmModal('Tampopo')"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0d1a0d,#122a12)"></div><div class="film-poster-sym">麺</div><div class="film-play">▶</div></div><div class="film-title">Tampopo</div><div class="film-year">1985</div></a><a class="film-card" href="#" onclick="event.preventDefault();openFilmModal('Four Lions')"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#1a0d0d,#2a1215)"></div><div class="film-poster-sym">☪</div><div class="film-play">▶</div></div><div class="film-title">Four Lions</div><div class="film-year">2010</div></a><a class="film-card" href="#" onclick="event.preventDefault();openFilmModal('The Lobster')"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0f0f12,#1a1a20)"></div><div class="film-poster-sym">♞</div><div class="film-play">▶</div></div><div class="film-title">The Lobster</div><div class="film-year">2015</div></a><a class="film-card" href="#" onclick="event.preventDefault();openFilmModal('Parasite')"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0a1215,#152030)"></div><div class="film-poster-sym">寄</div><div class="film-play">▶</div></div><div class="film-title">Parasite</div><div class="film-year">2019</div></a>
+      </div>
+    </div>
+
+    <!-- 03 -->
+    <div class="coll-item reveal">
+      <div class="coll-grid">
+        <div class="coll-title-card">
+          <div class="ctc-top"><div class="ctc-num">Collectie 03</div><div class="ctc-label">Sunsong Cinema</div></div>
+          <div class="ctc-bg-num">03</div>
+          <div class="ctc-bottom"><div class="ctc-name">All for Love</div><div class="ctc-divider"></div><div class="ctc-genre">Seven Romances</div></div>
+        </div>
+        <a class="film-card" href="#" onclick="event.preventDefault();openFilmModal('In the Mood for Love')"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#1a0a0a,#2a1010)"></div><div class="film-poster-sym">花</div><div class="film-play">▶</div></div><div class="film-title">In the Mood for Love</div><div class="film-year">2000</div></a><a class="film-card" href="#" onclick="event.preventDefault();openFilmModal('Portrait of a Lady on Fire')"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0a1a12,#102a18)"></div><div class="film-poster-sym">炎</div><div class="film-play">▶</div></div><div class="film-title">Portrait of a Lady on Fire</div><div class="film-year">2019</div></a><a class="film-card" href="#" onclick="event.preventDefault();openFilmModal('Eternal Sunshine')"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0a0a1a,#10102a)"></div><div class="film-poster-sym">☀</div><div class="film-play">▶</div></div><div class="film-title">Eternal Sunshine</div><div class="film-year">2004</div></a>
+      </div>
+      <div class="coll-grid coll-grid-row2">
+        <a class="film-card" href="#" onclick="event.preventDefault();openFilmModal('Brokeback Mountain')"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#1a1208,#3d2b0a)"></div><div class="film-poster-sym">山</div><div class="film-play">▶</div></div><div class="film-title">Brokeback Mountain</div><div class="film-year">2005</div></a><a class="film-card" href="#" onclick="event.preventDefault();openFilmModal('Before Sunrise')"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0a1520,#1a3040)"></div><div class="film-poster-sym">日</div><div class="film-play">▶</div></div><div class="film-title">Before Sunrise</div><div class="film-year">1995</div></a><a class="film-card" href="#" onclick="event.preventDefault();openFilmModal('Y Tu Mamá También')"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#1a0d0d,#2a1215)"></div><div class="film-poster-sym">Y</div><div class="film-play">▶</div></div><div class="film-title">Y Tu Mamá También</div><div class="film-year">2001</div></a><a class="film-card" href="#" onclick="event.preventDefault();openFilmModal('Carol')"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0f0a12,#1a1020)"></div><div class="film-poster-sym">♡</div><div class="film-play">▶</div></div><div class="film-title">Carol</div><div class="film-year">2015</div></a>
+      </div>
+    </div>
+
+    <!-- 04 -->
+    <div class="coll-item reveal">
+      <div class="coll-grid">
+        <div class="coll-title-card">
+          <div class="ctc-top"><div class="ctc-num">Collectie 04</div><div class="ctc-label">Sunsong Cinema</div></div>
+          <div class="ctc-bg-num">04</div>
+          <div class="ctc-bottom"><div class="ctc-name">Where Are We Now?</div><div class="ctc-divider"></div><div class="ctc-genre">Seven Films Close to the Skin of Our Times</div></div>
+        </div>
+        <a class="film-card" href="#" onclick="event.preventDefault();openFilmModal('Capernaum')"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#1a1208,#3d2b0a)"></div><div class="film-poster-sym">地</div><div class="film-play">▶</div></div><div class="film-title">Capernaum</div><div class="film-year">2018</div></a><a class="film-card" href="#" onclick="event.preventDefault();openFilmModal('Toni Erdmann')"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0a1520,#1a3040)"></div><div class="film-poster-sym">T</div><div class="film-play">▶</div></div><div class="film-title">Toni Erdmann</div><div class="film-year">2016</div></a><a class="film-card" href="#" onclick="event.preventDefault();openFilmModal('The Square')"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#150d1a,#20122a)"></div><div class="film-poster-sym">□</div><div class="film-play">▶</div></div><div class="film-title">The Square</div><div class="film-year">2017</div></a>
+      </div>
+      <div class="coll-grid coll-grid-row2">
+        <a class="film-card" href="#" onclick="event.preventDefault();openFilmModal('Aftersun')"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0d1a0d,#122a12)"></div><div class="film-poster-sym">光</div><div class="film-play">▶</div></div><div class="film-title">Aftersun</div><div class="film-year">2022</div></a><a class="film-card" href="#" onclick="event.preventDefault();openFilmModal('Drive My Car')"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#1a0d0d,#2a1215)"></div><div class="film-poster-sym">車</div><div class="film-play">▶</div></div><div class="film-title">Drive My Car</div><div class="film-year">2021</div></a><a class="film-card" href="#" onclick="event.preventDefault();openFilmModal('Licorice Pizza')"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0f0f12,#1a1a20)"></div><div class="film-poster-sym">L</div><div class="film-play">▶</div></div><div class="film-title">Licorice Pizza</div><div class="film-year">2021</div></a><a class="film-card" href="#" onclick="event.preventDefault();openFilmModal('Past Lives')"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0a1215,#152030)"></div><div class="film-poster-sym">過</div><div class="film-play">▶</div></div><div class="film-title">Past Lives</div><div class="film-year">2023</div></a>
+      </div>
+    </div>
+
+    <!-- 05 -->
+    <div class="coll-item reveal">
+      <div class="coll-grid">
+        <div class="coll-title-card">
+          <div class="ctc-top"><div class="ctc-num">Collectie 05</div><div class="ctc-label">Sunsong Cinema</div></div>
+          <div class="ctc-bg-num">05</div>
+          <div class="ctc-bottom"><div class="ctc-name">We Shall Overcome. (or not)</div><div class="ctc-divider"></div><div class="ctc-genre">Seven Political Films</div></div>
+        </div>
+        <a class="film-card" href="#" onclick="event.preventDefault();openFilmModal('The Battle of Algiers')"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#1a0d0d,#2a1215)"></div><div class="film-poster-sym">✊</div><div class="film-play">▶</div></div><div class="film-title">The Battle of Algiers</div><div class="film-year">1966</div></a><a class="film-card" href="#" onclick="event.preventDefault();openFilmModal('Z')"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0a1520,#1a3040)"></div><div class="film-poster-sym">Z</div><div class="film-play">▶</div></div><div class="film-title">Z</div><div class="film-year">1969</div></a><a class="film-card" href="#" onclick="event.preventDefault();openFilmModal('Selma')"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0d1a0d,#122a12)"></div><div class="film-poster-sym">S</div><div class="film-play">▶</div></div><div class="film-title">Selma</div><div class="film-year">2014</div></a>
+      </div>
+      <div class="coll-grid coll-grid-row2">
+        <a class="film-card" href="#" onclick="event.preventDefault();openFilmModal('I, Daniel Blake')"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#1a1208,#3d2b0a)"></div><div class="film-poster-sym">D</div><div class="film-play">▶</div></div><div class="film-title">I, Daniel Blake</div><div class="film-year">2016</div></a><a class="film-card" href="#" onclick="event.preventDefault();openFilmModal('Son of Saul')"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#150d1a,#20122a)"></div><div class="film-poster-sym">子</div><div class="film-play">▶</div></div><div class="film-title">Son of Saul</div><div class="film-year">2015</div></a><a class="film-card" href="#" onclick="event.preventDefault();openFilmModal('Quo Vadis, Aida?')"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0f0f12,#1a1a20)"></div><div class="film-poster-sym">A</div><div class="film-play">▶</div></div><div class="film-title">Quo Vadis, Aida?</div><div class="film-year">2020</div></a><a class="film-card" href="#" onclick="event.preventDefault();openFilmModal('The Act of Killing')"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0a1215,#152030)"></div><div class="film-poster-sym">殺</div><div class="film-play">▶</div></div><div class="film-title">The Act of Killing</div><div class="film-year">2012</div></a>
+      </div>
+    </div>
+
+    <!-- 06 -->
+    <div class="coll-item reveal">
+      <div class="coll-grid">
+        <div class="coll-title-card">
+          <div class="ctc-top"><div class="ctc-num">Collectie 06</div><div class="ctc-label">Sunsong Cinema</div></div>
+          <div class="ctc-bg-num">06</div>
+          <div class="ctc-bottom"><div class="ctc-name">Gimme a Break</div><div class="ctc-divider"></div><div class="ctc-genre">Seven Delightful Fun Films</div></div>
+        </div>
+        <a class="film-card" href="#" onclick="event.preventDefault();openFilmModal('Everything Everywhere All at Once')"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#1a0a1a,#2a102a)"></div><div class="film-poster-sym">∞</div><div class="film-play">▶</div></div><div class="film-title">Everything Everywhere All at Once</div><div class="film-year">2022</div></a><a class="film-card" href="#" onclick="event.preventDefault();openFilmModal('The Full Monty')"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0a1520,#1a3040)"></div><div class="film-poster-sym">♛</div><div class="film-play">▶</div></div><div class="film-title">The Full Monty</div><div class="film-year">1997</div></a><a class="film-card" href="#" onclick="event.preventDefault();openFilmModal('Singin\' in the Rain')"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#1a1208,#3d2b0a)"></div><div class="film-poster-sym">♪</div><div class="film-play">▶</div></div><div class="film-title">Singin' in the Rain</div><div class="film-year">1952</div></a>
+      </div>
+      <div class="coll-grid coll-grid-row2">
+        <a class="film-card" href="#" onclick="event.preventDefault();openFilmModal('Legally Blonde')"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0d1a0d,#122a12)"></div><div class="film-poster-sym">L</div><div class="film-play">▶</div></div><div class="film-title">Legally Blonde</div><div class="film-year">2001</div></a><a class="film-card" href="#" onclick="event.preventDefault();openFilmModal('Paddington 2')"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0f0a10,#1a1020)"></div><div class="film-poster-sym">P</div><div class="film-play">▶</div></div><div class="film-title">Paddington 2</div><div class="film-year">2017</div></a><a class="film-card" href="#" onclick="event.preventDefault();openFilmModal('Princess Mononoke')"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0a150a,#153015)"></div><div class="film-poster-sym">森</div><div class="film-play">▶</div></div><div class="film-title">Princess Mononoke</div><div class="film-year">1997</div></a><a class="film-card" href="#" onclick="event.preventDefault();openFilmModal('Clueless')"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#1a0d10,#2a1520)"></div><div class="film-poster-sym">C</div><div class="film-play">▶</div></div><div class="film-title">Clueless</div><div class="film-year">1995</div></a>
+      </div>
+    </div>
+
+    <!-- 07 -->
+    <div class="coll-item reveal">
+      <div class="coll-grid">
+        <div class="coll-title-card">
+          <div class="ctc-top"><div class="ctc-num">Collectie 07</div><div class="ctc-label">Sunsong Cinema</div></div>
+          <div class="ctc-bg-num">07</div>
+          <div class="ctc-bottom"><div class="ctc-name">Even Dwarfs Once Started Small</div><div class="ctc-divider"></div><div class="ctc-genre">Seven Short Films</div></div>
+        </div>
+        <a class="film-card" href="#" onclick="event.preventDefault();openFilmModal('La Jetée')"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0f0f12,#1a1a20)"></div><div class="film-poster-sym">✈</div><div class="film-play">▶</div></div><div class="film-title">La Jetée</div><div class="film-year">1962</div></a><a class="film-card" href="#" onclick="event.preventDefault();openFilmModal('An Occurrence at Owl Creek Bridge')"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0a1520,#1a3040)"></div><div class="film-poster-sym">⌛</div><div class="film-play">▶</div></div><div class="film-title">An Occurrence at Owl Creek Bridge</div><div class="film-year">1962</div></a><a class="film-card" href="#" onclick="event.preventDefault();openFilmModal('Wasp')"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#1a1208,#3d2b0a)"></div><div class="film-poster-sym">W</div><div class="film-play">▶</div></div><div class="film-title">Wasp</div><div class="film-year">2003</div></a>
+      </div>
+      <div class="coll-grid coll-grid-row2">
+        <a class="film-card" href="#" onclick="event.preventDefault();openFilmModal('The New Tenants')"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0d1a0d,#122a12)"></div><div class="film-poster-sym">N</div><div class="film-play">▶</div></div><div class="film-title">The New Tenants</div><div class="film-year">2009</div></a><a class="film-card" href="#" onclick="event.preventDefault();openFilmModal('Two Distant Strangers')"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#150d1a,#20122a)"></div><div class="film-poster-sym">二</div><div class="film-play">▶</div></div><div class="film-title">Two Distant Strangers</div><div class="film-year">2020</div></a><a class="film-card" href="#" onclick="event.preventDefault();openFilmModal('Stutterer')"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#1a0d0d,#2a1215)"></div><div class="film-poster-sym">S</div><div class="film-play">▶</div></div><div class="film-title">Stutterer</div><div class="film-year">2015</div></a><a class="film-card" href="#" onclick="event.preventDefault();openFilmModal('The Shore')"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0a1215,#152030)"></div><div class="film-poster-sym">波</div><div class="film-play">▶</div></div><div class="film-title">The Shore</div><div class="film-year">2011</div></a>
+      </div>
+    </div>
+
+    <!-- 08 -->
+    <div class="coll-item reveal">
+      <div class="coll-grid">
+        <div class="coll-title-card">
+          <div class="ctc-top"><div class="ctc-num">Collectie 08</div><div class="ctc-label">Sunsong Cinema</div></div>
+          <div class="ctc-bg-num">08</div>
+          <div class="ctc-bottom"><div class="ctc-name">Masterpieces of Now</div><div class="ctc-divider"></div><div class="ctc-genre">The Eight Absolutely Great</div></div>
+        </div>
+        <a class="film-card" href="#" onclick="event.preventDefault();openFilmModal('Tár')"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0a1520,#1a3040)"></div><div class="film-poster-sym">T</div><div class="film-play">▶</div></div><div class="film-title">Tár</div><div class="film-year">2022</div></a><a class="film-card" href="#" onclick="event.preventDefault();openFilmModal('All Quiet on the Western Front')"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0f0f12,#1a1a20)"></div><div class="film-poster-sym">☮</div><div class="film-play">▶</div></div><div class="film-title">All Quiet on the Western Front</div><div class="film-year">2022</div></a><a class="film-card" href="#" onclick="event.preventDefault();openFilmModal('The Power of the Dog')"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0d1a0d,#122a12)"></div><div class="film-poster-sym">犬</div><div class="film-play">▶</div></div><div class="film-title">The Power of the Dog</div><div class="film-year">2021</div></a>
+      </div>
+      <div class="coll-grid coll-grid-row2">
+        <a class="film-card" href="#" onclick="event.preventDefault();openFilmModal('Memoria')"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#1a1208,#3d2b0a)"></div><div class="film-poster-sym">記</div><div class="film-play">▶</div></div><div class="film-title">Memoria</div><div class="film-year">2021</div></a><a class="film-card" href="#" onclick="event.preventDefault();openFilmModal('Beau Is Afraid')"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#150d1a,#20122a)"></div><div class="film-poster-sym">B</div><div class="film-play">▶</div></div><div class="film-title">Beau Is Afraid</div><div class="film-year">2023</div></a><a class="film-card" href="#" onclick="event.preventDefault();openFilmModal('The Fabelmans')"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#1a0d0d,#2a1215)"></div><div class="film-poster-sym">映</div><div class="film-play">▶</div></div><div class="film-title">The Fabelmans</div><div class="film-year">2022</div></a><a class="film-card" href="#" onclick="event.preventDefault();openFilmModal('Decision to Leave')"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0a1215,#152030)"></div><div class="film-poster-sym">決</div><div class="film-play">▶</div></div><div class="film-title">Decision to Leave</div><div class="film-year">2022</div></a><a class="film-card" href="#" onclick="event.preventDefault();openFilmModal('Asteroid City')"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0f0a10,#1a1020)"></div><div class="film-poster-sym">★</div><div class="film-play">▶</div></div><div class="film-title">Asteroid City</div><div class="film-year">2023</div></a>
+      </div>
+    </div>
+
+    <div class="coll-satellite reveal">
+      <div class="sat-sun">
+        <div class="sat-orb">
+          <div class="sat-orb-ring sat-orb-ring-1"></div>
+          <div class="sat-orb-ring sat-orb-ring-2"></div>
+          <div class="sat-orb-ring sat-orb-ring-3"></div>
+          <div class="sat-orb-core">☀</div>
+        </div>
+      </div>
+      <div class="sat-content">
+        <div class="sat-title">Sunsong<br>Satellite</div>
+        <div class="sat-desc">A film that dares to leave all orbits behind and head straight for the sun — sublime in a way that is utterly unclassifiable. Our selection.</div>
+      </div>
+      <div class="sat-film">
+        <a class="film-card" href="#" onclick="event.preventDefault();openFilmModal('This Week\'s Film')">
+          <div class="film-poster">
+            <div class="film-poster-bg" style="background:linear-gradient(160deg,#1a1000,#3a2800)"></div>
+            <div class="sat-film-sym">☀</div>
+            <div class="film-play">▶</div>
+          </div>
+          <div class="film-title">This Week's Film</div>
+          <div class="film-year">2024</div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="manifesto" id="about">
+  <div class="manifesto-inner">
+    <div class="manifesto-label reveal">Sunsong Cinema</div>
+    <div class="manifesto-text reveal">
+      <p>We select films that matter. They <span class="hl">change lives.</span> They connect. They help you reconnect with those around you, and with yourself. They nourish the love for the world, and the love for everything the world is not yet. They blissfully do nothing at all — pure delight and pleasure. They are political. They cuddle. They embrace. They make love. They commemorate genocides and also already the first smile of your great-great-grandchild, years from now. They polarize. They unite. They destabilize. They stabilize. A river is nothing compared to them. They are heartbreaking and complete as a lotus flower. They are unforgettable, because they help us forget and forgive. They enrage and set us on fire. They help us begin anew, because they help us leave things behind. They are historical, because they are signs of our times. They do what movies should do: <span class="hl">move.</span></p>
+      <p>Sunsong Cinema is your carefully curated selection. Out of ten thousand new films every year, we select those that have proven to be extraordinarily beneficial. We simply want to pass them on.</p>
+      <div class="manifesto-closing">Enjoy.</div>
+    </div>
+  </div>
+</section>
+
+<section class="share-section" id="share">
+  <div class="share-inner">
+    <div class="share-eyebrow">Pass It On</div>
+    <h2 class="share-title">Send a film to someone<br>you <em>love.</em></h2>
+    <p class="share-sub">A film you love is a gift. Share it with someone who matters — via WhatsApp, Signal, email, or any channel you choose.</p>
+    <div class="share-input-wrap">
+      <div class="share-input-label">Which film do you want to share?</div>
+      <input class="share-input" type="text" id="filmTitle" placeholder="e.g. Parasite, Capernaum, The Lives of Others...">
+    </div>
+    <div class="share-channels">
+      <button class="share-ch" onclick="shareVia('whatsapp')"><span class="share-ch-icon">💬</span><span class="share-ch-name">WhatsApp</span></button>
+      <button class="share-ch" onclick="shareVia('signal')"><span class="share-ch-icon">🔒</span><span class="share-ch-name">Signal</span></button>
+      <button class="share-ch" onclick="shareVia('telegram')"><span class="share-ch-icon">✈️</span><span class="share-ch-name">Telegram</span></button>
+      <button class="share-ch" onclick="shareVia('email')"><span class="share-ch-icon">✉️</span><span class="share-ch-name">Email</span></button>
+      <button class="share-ch" onclick="shareVia('twitter')"><span class="share-ch-icon">𝕏</span><span class="share-ch-name">X / Twitter</span></button>
+      <button class="share-ch" onclick="shareVia('facebook')"><span class="share-ch-icon">f</span><span class="share-ch-name">Facebook</span></button>
+    </div>
+    <div class="share-more">
+      <button class="share-more-btn" onclick="shareVia('sms')">📱 SMS</button>
+      <button class="share-more-btn" onclick="shareVia('instagram')">📷 Instagram</button>
+      <button class="share-more-btn" onclick="shareVia('linkedin')">in LinkedIn</button>
+      <button class="share-more-btn" onclick="nativeShare()">↑ More options</button>
+    </div>
+    <div class="copy-link-row">
+      <input class="copy-link-input" id="shareLinkInput" readonly value="https://sunsongcinema.com">
+      <button class="copy-link-btn" id="copyLinkBtn" onclick="copyLink()">Copy Link</button>
+    </div>
+    <div class="share-success" id="shareSuccess"></div>
+  </div>
+</section>
+
+<section class="find-section" id="find">
+  <div class="find-inner reveal">
+    <div class="find-eyebrow">Discover</div>
+    <h2 class="find-title">What kind of film do you<br>want to <em>see?</em></h2>
+    <p class="find-sub">Describe your mood, a theme, a country, a feeling, an actor or actress, a director, or an emotion, and we will propose two films made just for you. Human-made films for human-made humans, while supplies last.</p>
+    <a href="find.html" class="btn-primary" style="margin:0 auto;display:inline-flex">Find My Two Films →</a>
+  </div>
+</section>
+
+<!-- BUY ME A COFFEE -->
+<section class="coffee-section">
+  <div class="coffee-inner">
+    <div class="coffee-icon">☕</div>
+    <div class="coffee-text">
+      <div class="coffee-title">With a cup of sunroasted coffee,<br>Sunsong Cinema can keep going.</div>
+      <div class="coffee-sub">Thanks a lot.</div>
+    </div>
+    <a class="coffee-btn" href="https://www.buymeacoffee.com/sunsongcinema" target="_blank" rel="noopener">
+      Buy me a coffee
+    </a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">SUNSONG CINEMA</div>
+  <div class="footer-tagline">"Film is like love, give it and it's a gift that keeps giving."</div>
+  <div class="footer-links"><a href="#about">About</a><a href="#share">Share</a><a href="find.html">Find a Film</a></div>
+</footer>
+
+<!-- FILM MODAL -->
+<div class="film-modal" id="filmModal">
+  <div class="film-modal-backdrop" onclick="closeFilmModal()"></div>
+  <div class="film-modal-box">
+    <button class="fm-close" onclick="closeFilmModal()">✕</button>
+    <div id="filmModalBody" style="display:contents"></div>
+  </div>
+</div>
+
+<script>
+// Header scroll
+window.addEventListener('scroll',function(){
+  document.getElementById('hdr').classList.toggle('scrolled',window.scrollY>60);
+});
+// Reveal on scroll
+var obs=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('visible')});
+},{threshold:0.08});
+document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el)});
+
+// Share functions
+function gf(){return document.getElementById('filmTitle').value.trim()||'a film I love'}
+function gt(f){return 'I want to share '+f+' with you. Film is like love — give it and it\'s a gift that keeps giving. Find it on Sunsong Cinema: https://sunsongcinema.com'}
+function shareVia(ch){
+  var f=gf(),t=gt(f),u='https://sunsongcinema.com',s='';
+  if(ch==='whatsapp')s='https://wa.me/?text='+encodeURIComponent(t);
+  else if(ch==='signal'){navigator.clipboard.writeText(t).catch(function(){});showOk('Copied for Signal! Open Signal and paste.');return}
+  else if(ch==='telegram')s='https://t.me/share/url?url='+encodeURIComponent(u)+'&text='+encodeURIComponent('I want to share '+f+' with you.');
+  else if(ch==='email')s='mailto:?subject='+encodeURIComponent('A film for you: '+f)+'&body='+encodeURIComponent(t);
+  else if(ch==='twitter')s='https://twitter.com/intent/tweet?text='+encodeURIComponent('I want to share '+f+' with you. Film is like love.')+'&url='+encodeURIComponent(u);
+  else if(ch==='facebook')s='https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(u);
+  else if(ch==='sms')s='sms:?body='+encodeURIComponent(t);
+  else if(ch==='instagram'){navigator.clipboard.writeText(t).catch(function(){});showOk('Copied! Open Instagram and paste.');return}
+  else if(ch==='linkedin')s='https://www.linkedin.com/sharing/share-offsite/?url='+encodeURIComponent(u);
+  if(s)window.open(s,'_blank');
+}
+function nativeShare(){
+  var f=gf(),t=gt(f);
+  if(navigator.share){navigator.share({title:'A film for you: '+f,text:t,url:'https://sunsongcinema.com'}).catch(function(){});}
+  else{navigator.clipboard.writeText(t).catch(function(){});showOk('Copied! Paste it anywhere to share.');}
+}
+function copyLink(){
+  var f=gf(),t=gt(f);
+  navigator.clipboard.writeText(t).catch(function(){var i=document.getElementById('shareLinkInput');i.select();document.execCommand('copy')});
+  var b=document.getElementById('copyLinkBtn');b.textContent='Copied!';setTimeout(function(){b.textContent='Copy Link'},2000);
+  showOk('Copied! Paste it to share this film.');
+}
+function showOk(msg){
+  var el=document.getElementById('shareSuccess');el.textContent='✓ '+msg;el.classList.add('visible');
+  setTimeout(function(){el.classList.remove('visible')},4000);
+}
+
+// ── FILM DATA ──────────────────────────────────────────────
+const FILMS = {"tokyo-story":{"title":"Tokyo Story","year":1953,"director":"Yasujirō Ozu","country":"Japan","duration":"136 min","collection":"The Magnificent Seven","gradient":"linear-gradient(160deg,#0a1520,#1a3040)","sym":"映","sunsong":"One of the most quietly devastating films ever made. Ozu observes a family with infinite patience — and infinite sorrow. After watching Tokyo Story, you will call your parents.","mubi":"https://mubi.com/films/tokyo-story","amazon":"https://www.amazon.com/s?k=tokyo+story+ozu+film","jw":"https://www.justwatch.com/us/movie/tokyo-story"},"bicycle-thieves":{"title":"Bicycle Thieves","year":1948,"director":"Vittorio De Sica","country":"Italy","duration":"89 min","collection":"The Magnificent Seven","gradient":"linear-gradient(160deg,#1a1208,#3d2b0a)","sym":"自","sunsong":"A father and son walk through Rome searching for a stolen bicycle. What they find is something far more broken — and far more beautiful. The founding document of Italian neorealism.","mubi":"https://mubi.com/films/bicycle-thieves","amazon":"https://www.amazon.com/s?k=bicycle+thieves+de+sica","jw":"https://www.justwatch.com/us/movie/bicycle-thieves"},"rashomon":{"title":"Rashomon","year":1950,"director":"Akira Kurosawa","country":"Japan","duration":"88 min","collection":"The Magnificent Seven","gradient":"linear-gradient(160deg,#0d1a0d,#122a12)","sym":"羅","sunsong":"Four people tell four completely different versions of the same event. Kurosawa invented a new way of understanding truth — and lying — that changed cinema forever.","mubi":"https://mubi.com/films/rashomon","amazon":"https://www.amazon.com/s?k=rashomon+kurosawa+film","jw":"https://www.justwatch.com/us/movie/rashomon"},"the-400-blows":{"title":"The 400 Blows","year":1959,"director":"François Truffaut","country":"France","duration":"99 min","collection":"The Magnificent Seven","gradient":"linear-gradient(160deg,#1a0d0d,#2a1215)","sym":"四","sunsong":"Truffaut's autobiographical debut is the most tender and furious portrait of childhood ever put on film. Antoine Doinel runs toward the sea — and we run with him, breathless.","mubi":"https://mubi.com/films/the-400-blows","amazon":"https://www.amazon.com/s?k=400+blows+truffaut+film","jw":"https://www.justwatch.com/us/movie/the-400-blows"},"8half":{"title":"8½","year":1963,"director":"Federico Fellini","country":"Italy","duration":"138 min","collection":"The Magnificent Seven","gradient":"linear-gradient(160deg,#150d1a,#20122a)","sym":"8½","sunsong":"Fellini made a film about a director who cannot make a film. The result is the greatest film ever made about creativity, memory, and being human. Nothing quite like it exists.","mubi":"https://mubi.com/films/8-1-2","amazon":"https://www.amazon.com/s?k=8+and+a+half+fellini+film","jw":"https://www.justwatch.com/us/movie/8-1-2"},"breathless":{"title":"Breathless","year":1960,"director":"Jean-Luc Godard","country":"France","duration":"90 min","collection":"The Magnificent Seven","gradient":"linear-gradient(160deg,#0f0f12,#1a1a20)","sym":"À","sunsong":"Godard broke every rule of cinema and invented new ones on the spot. Breathless is still the most alive, reckless, and thrilling film of the French New Wave — and it still is.","mubi":"https://mubi.com/films/breathless","amazon":"https://www.amazon.com/s?k=breathless+godard+1960","jw":"https://www.justwatch.com/us/movie/breathless-1960"},"stalker":{"title":"Stalker","year":1979,"director":"Andrei Tarkovsky","country":"USSR","duration":"163 min","collection":"The Magnificent Seven","gradient":"linear-gradient(160deg,#0a1215,#152030)","sym":"Ст","sunsong":"Three men journey into a forbidden Zone where your deepest wish may come true. Tarkovsky turns science fiction into pure spiritual experience. There is nothing like it in cinema.","mubi":"https://mubi.com/films/stalker","amazon":"https://www.amazon.com/s?k=stalker+tarkovsky+1979","jw":"https://www.justwatch.com/us/movie/stalker"},"some-like-it-hot":{"title":"Some Like It Hot","year":1959,"director":"Billy Wilder","country":"USA","duration":"121 min","collection":"We Can Even Make a Pillar of Salt Laugh","gradient":"linear-gradient(160deg,#1a1208,#3d2b0a)","sym":"♨","sunsong":"Two musicians witness a mob hit and hide in an all-women band. Wilder's comic timing is so perfect it feels illegal. The final line is the best last line in comedy history.","mubi":"https://mubi.com/films/some-like-it-hot","amazon":"https://www.amazon.com/s?k=some+like+it+hot+wilder","jw":"https://www.justwatch.com/us/movie/some-like-it-hot"},"the-grand-budapest-hotel":{"title":"The Grand Budapest Hotel","year":2014,"director":"Wes Anderson","country":"Germany/USA","duration":"99 min","collection":"We Can Even Make a Pillar of Salt Laugh","gradient":"linear-gradient(160deg,#0a1520,#1a3040)","sym":"∞","sunsong":"A legendary concierge and his protégé become embroiled in murder, theft, and war across a fading European empire. Anderson's most melancholic film disguised as his most playful.","mubi":"https://mubi.com/films/the-grand-budapest-hotel","amazon":"https://www.amazon.com/s?k=grand+budapest+hotel+wes+anderson","jw":"https://www.justwatch.com/us/movie/the-grand-budapest-hotel"},"amelie":{"title":"Amélie","year":2001,"director":"Jean-Pierre Jeunet","country":"France","duration":"122 min","collection":"We Can Even Make a Pillar of Salt Laugh","gradient":"linear-gradient(160deg,#150d1a,#20122a)","sym":"Â","sunsong":"A shy Parisian waitress secretly rearranges other people's lives for the better while neglecting her own happiness. Pure cinematic joy — warm, strange, and impossibly alive.","mubi":"https://mubi.com/films/amelie","amazon":"https://www.amazon.com/s?k=amelie+jeunet+film","jw":"https://www.justwatch.com/us/movie/amelie"},"tampopo":{"title":"Tampopo","year":1985,"director":"Juzo Itami","country":"Japan","duration":"114 min","collection":"We Can Even Make a Pillar of Salt Laugh","gradient":"linear-gradient(160deg,#0d1a0d,#122a12)","sym":"麺","sunsong":"A truck driver helps a widow perfect her ramen recipe. Japan's greatest food comedy is also a meditation on obsession, craft, and desire — surreal, sensual, and completely irresistible.","mubi":"https://mubi.com/films/tampopo","amazon":"https://www.amazon.com/s?k=tampopo+itami+film","jw":"https://www.justwatch.com/us/movie/tampopo"},"four-lions":{"title":"Four Lions","year":2010,"director":"Chris Morris","country":"UK","duration":"97 min","collection":"We Can Even Make a Pillar of Salt Laugh","gradient":"linear-gradient(160deg,#1a0d0d,#2a1215)","sym":"☪","sunsong":"Four would-be jihadists from Sheffield plan a terrorist attack with catastrophic incompetence. The bravest, funniest, and most uncomfortable comedy ever made about radicalisation.","mubi":"https://mubi.com/films/four-lions","amazon":"https://www.amazon.com/s?k=four+lions+chris+morris","jw":"https://www.justwatch.com/us/movie/four-lions"},"the-lobster":{"title":"The Lobster","year":2015,"director":"Yorgos Lanthimos","country":"Ireland/Greece","duration":"118 min","collection":"We Can Even Make a Pillar of Salt Laugh","gradient":"linear-gradient(160deg,#0f0f12,#1a1a20)","sym":"♞","sunsong":"In a near future, single people must find a partner or be turned into an animal. Lanthimos dissects romantic love with surgical deadpan. The cruelest, strangest, most romantic film of the decade.","mubi":"https://mubi.com/films/the-lobster","amazon":"https://www.amazon.com/s?k=the+lobster+lanthimos","jw":"https://www.justwatch.com/us/movie/the-lobster"},"parasite":{"title":"Parasite","year":2019,"director":"Bong Joon-ho","country":"South Korea","duration":"132 min","collection":"We Can Even Make a Pillar of Salt Laugh","gradient":"linear-gradient(160deg,#0a1215,#152030)","sym":"寄","sunsong":"Bong Joon-ho dismantles class with the precision of a surgeon and the gleeful chaos of an anarchist. Parasite is both the funniest and most horrifying film of the decade.","mubi":"https://mubi.com/films/parasite-2019","amazon":"https://www.amazon.com/s?k=parasite+bong+joon+ho","jw":"https://www.justwatch.com/us/movie/parasite-2019"},"in-the-mood-for-love":{"title":"In the Mood for Love","year":2000,"director":"Wong Kar-wai","country":"Hong Kong","duration":"98 min","collection":"All for Love","gradient":"linear-gradient(160deg,#1a0a0a,#2a1010)","sym":"花","sunsong":"Two neighbours suspect their spouses of having an affair. They meet. They do not become lovers. Wong Kar-wai makes restraint feel like the most erotic thing in the world.","mubi":"https://mubi.com/films/in-the-mood-for-love","amazon":"https://www.amazon.com/s?k=in+the+mood+for+love+wong+kar+wai","jw":"https://www.justwatch.com/us/movie/in-the-mood-for-love"},"portrait-of-a-lady-on-fire":{"title":"Portrait of a Lady on Fire","year":2019,"director":"Céline Sciamma","country":"France","duration":"122 min","collection":"All for Love","gradient":"linear-gradient(160deg,#0a1a12,#102a18)","sym":"炎","sunsong":"A painter is commissioned to secretly observe a woman she is falling in love with. Sciamma's film burns slowly, then all at once. The final shot will stay with you forever.","mubi":"https://mubi.com/films/portrait-of-a-lady-on-fire","amazon":"https://www.amazon.com/s?k=portrait+of+a+lady+on+fire+sciamma","jw":"https://www.justwatch.com/us/movie/portrait-of-a-lady-on-fire"},"eternal-sunshine":{"title":"Eternal Sunshine","year":2004,"director":"Michel Gondry","country":"USA","duration":"108 min","collection":"All for Love","gradient":"linear-gradient(160deg,#0a0a1a,#10102a)","sym":"☀","sunsong":"A man erases his ex-girlfriend from his memory — then desperately tries to hold on. Gondry and Kaufman's masterpiece asks whether love is worth the pain. The answer breaks your heart.","mubi":"https://mubi.com/films/eternal-sunshine-of-the-spotless-mind","amazon":"https://www.amazon.com/s?k=eternal+sunshine+spotless+mind","jw":"https://www.justwatch.com/us/movie/eternal-sunshine-of-the-spotless-mind"},"brokeback-mountain":{"title":"Brokeback Mountain","year":2005,"director":"Ang Lee","country":"USA","duration":"134 min","collection":"All for Love","gradient":"linear-gradient(160deg,#1a1208,#3d2b0a)","sym":"山","sunsong":"Two ranch hands fall in love in 1963 Wyoming and spend twenty years unable to be together. Ang Lee's film is about the love you cannot name — and the life that love costs you.","mubi":"https://mubi.com/films/brokeback-mountain","amazon":"https://www.amazon.com/s?k=brokeback+mountain+ang+lee","jw":"https://www.justwatch.com/us/movie/brokeback-mountain"},"before-sunrise":{"title":"Before Sunrise","year":1995,"director":"Richard Linklater","country":"USA/Austria","duration":"101 min","collection":"All for Love","gradient":"linear-gradient(160deg,#0a1520,#1a3040)","sym":"日","sunsong":"An American and a French woman spend one night in Vienna together before parting forever. Linklater captures what it feels like to fall in love — all conversation, all possibility, all dawn.","mubi":"https://mubi.com/films/before-sunrise","amazon":"https://www.amazon.com/s?k=before+sunrise+linklater","jw":"https://www.justwatch.com/us/movie/before-sunrise"},"y-tu-mama-tambien":{"title":"Y Tu Mamá También","year":2001,"director":"Alfonso Cuarón","country":"Mexico","duration":"106 min","collection":"All for Love","gradient":"linear-gradient(160deg,#1a0d0d,#2a1215)","sym":"Y","sunsong":"Two teenage boys and an older woman drive across Mexico on a road trip that changes all three forever. Cuarón hides a devastating film about mortality and desire inside a sun-drenched comedy.","mubi":"https://mubi.com/films/y-tu-mama-tambien","amazon":"https://www.amazon.com/s?k=y+tu+mama+tambien+cuaron","jw":"https://www.justwatch.com/us/movie/y-tu-mama-tambien"},"carol":{"title":"Carol","year":2015,"director":"Todd Haynes","country":"USA/UK","duration":"118 min","collection":"All for Love","gradient":"linear-gradient(160deg,#0f0a12,#1a1020)","sym":"♡","sunsong":"A young photographer falls in love with an older married woman in 1950s New York. Haynes renders desire through glances, gloves, and glass — one of the most beautiful love films ever made.","mubi":"https://mubi.com/films/carol","amazon":"https://www.amazon.com/s?k=carol+2015+todd+haynes","jw":"https://www.justwatch.com/us/movie/carol"},"capernaum":{"title":"Capernaum","year":2018,"director":"Nadine Labaki","country":"Lebanon","duration":"126 min","collection":"Where Are We Now?","gradient":"linear-gradient(160deg,#1a1208,#3d2b0a)","sym":"地","sunsong":"A 12-year-old boy sues his parents for bringing him into the world. Labaki's film is a furious cry from the streets of Beirut — raw, compassionate, and impossible to forget.","mubi":"https://mubi.com/films/capernaum","amazon":"https://www.amazon.com/s?k=capernaum+2018+labaki","jw":"https://www.justwatch.com/us/movie/capernaum"},"toni-erdmann":{"title":"Toni Erdmann","year":2016,"director":"Maren Ade","country":"Germany/Austria","duration":"162 min","collection":"Where Are We Now?","gradient":"linear-gradient(160deg,#0a1520,#1a3040)","sym":"T","sunsong":"A father crashes his daughter's corporate life in Bucharest wearing a fake name and a bad wig. The funniest and most heartbreaking film about fathers and daughters — and late capitalism — ever made.","mubi":"https://mubi.com/films/toni-erdmann","amazon":"https://www.amazon.com/s?k=toni+erdmann+maren+ade","jw":"https://www.justwatch.com/us/movie/toni-erdmann"},"the-square":{"title":"The Square","year":2017,"director":"Ruben Östlund","country":"Sweden","duration":"151 min","collection":"Where Are We Now?","gradient":"linear-gradient(160deg,#150d1a,#20122a)","sym":"□","sunsong":"A curator at a contemporary art museum loses his moral compass. Östlund dissects liberal hypocrisy with devastating precision and a performance-art scene that is genuinely unbearable.","mubi":"https://mubi.com/films/the-square-2017","amazon":"https://www.amazon.com/s?k=the+square+2017+ostlund","jw":"https://www.justwatch.com/us/movie/the-square-2017"},"aftersun":{"title":"Aftersun","year":2022,"director":"Charlotte Wells","country":"UK/USA","duration":"102 min","collection":"Where Are We Now?","gradient":"linear-gradient(160deg,#0d1a0d,#122a12)","sym":"光","sunsong":"A daughter revisits footage of a holiday she shared with her father as a child, slowly understanding what she could not have seen then. Charlotte Wells' debut is a devastating masterpiece of memory.","mubi":"https://mubi.com/films/aftersun","amazon":"https://www.amazon.com/s?k=aftersun+2022+charlotte+wells","jw":"https://www.justwatch.com/us/movie/aftersun"},"drive-my-car":{"title":"Drive My Car","year":2021,"director":"Ryusuke Hamaguchi","country":"Japan","duration":"179 min","collection":"Where Are We Now?","gradient":"linear-gradient(160deg,#1a0d0d,#2a1215)","sym":"車","sunsong":"A theatre director grieving his wife drives through Japan rehearsing Chekhov with a multilingual cast. Hamaguchi gives you three hours and takes your breath away with every single minute.","mubi":"https://mubi.com/films/drive-my-car","amazon":"https://www.amazon.com/s?k=drive+my+car+hamaguchi","jw":"https://www.justwatch.com/us/movie/drive-my-car"},"licorice-pizza":{"title":"Licorice Pizza","year":2021,"director":"Paul Thomas Anderson","country":"USA","duration":"133 min","collection":"Where Are We Now?","gradient":"linear-gradient(160deg,#0f0f12,#1a1a20)","sym":"L","sunsong":"A 15-year-old actor and a 25-year-old woman orbit each other through 1970s San Fernando Valley. PTA at his most loose, alive, and in love with California — pure cinematic sunshine.","mubi":"https://mubi.com/films/licorice-pizza","amazon":"https://www.amazon.com/s?k=licorice+pizza+pta+2021","jw":"https://www.justwatch.com/us/movie/licorice-pizza"},"past-lives":{"title":"Past Lives","year":2023,"director":"Celine Song","country":"USA/South Korea","duration":"106 min","collection":"Where Are We Now?","gradient":"linear-gradient(160deg,#0a1215,#152030)","sym":"過","sunsong":"Two childhood sweethearts separated by continents reconnect across decades. Past Lives is devastatingly simple — and simply devastating. The best film of 2023, by a distance.","mubi":"https://mubi.com/films/past-lives","amazon":"https://www.amazon.com/s?k=past+lives+2023+celine+song","jw":"https://www.justwatch.com/us/movie/past-lives"},"the-battle-of-algiers":{"title":"The Battle of Algiers","year":1966,"director":"Gillo Pontecorvo","country":"Italy/Algeria","duration":"121 min","collection":"We Shall Overcome. (or not)","gradient":"linear-gradient(160deg,#1a0d0d,#2a1215)","sym":"✊","sunsong":"The Algerian struggle for independence from France, filmed with the immediacy of a documentary. So accurate that the Pentagon screened it to study guerrilla warfare. Essential political cinema.","mubi":"https://mubi.com/films/the-battle-of-algiers","amazon":"https://www.amazon.com/s?k=battle+of+algiers+pontecorvo","jw":"https://www.justwatch.com/us/movie/the-battle-of-algiers"},"z":{"title":"Z","year":1969,"director":"Costa-Gavras","country":"France/Algeria","duration":"127 min","collection":"We Shall Overcome. (or not)","gradient":"linear-gradient(160deg,#0a1520,#1a3040)","sym":"Z","sunsong":"The assassination of a Greek political figure, and the cover-up that follows. Costa-Gavras invented the political thriller as we know it — urgent, furious, and as relevant as ever.","mubi":"https://mubi.com/films/z","amazon":"https://www.amazon.com/s?k=z+1969+costa+gavras","jw":"https://www.justwatch.com/us/movie/z-1969"},"selma":{"title":"Selma","year":2014,"director":"Ava DuVernay","country":"USA","duration":"128 min","collection":"We Shall Overcome. (or not)","gradient":"linear-gradient(160deg,#0d1a0d,#122a12)","sym":"S","sunsong":"Martin Luther King leads the 1965 voting rights marches from Selma to Montgomery. DuVernay refuses to make King a saint — she makes him human, and the film is far more powerful for it.","mubi":"https://mubi.com/films/selma","amazon":"https://www.amazon.com/s?k=selma+2014+duvernay","jw":"https://www.justwatch.com/us/movie/selma"},"i-daniel-blake":{"title":"I, Daniel Blake","year":2016,"director":"Ken Loach","country":"UK","duration":"100 min","collection":"We Shall Overcome. (or not)","gradient":"linear-gradient(160deg,#1a1208,#3d2b0a)","sym":"D","sunsong":"A carpenter battles British bureaucracy after a heart attack. Ken Loach's Palme d'Or winner is a controlled fury against a system designed to grind people down. It will make you want to act.","mubi":"https://mubi.com/films/i-daniel-blake","amazon":"https://www.amazon.com/s?k=i+daniel+blake+ken+loach","jw":"https://www.justwatch.com/us/movie/i-daniel-blake"},"son-of-saul":{"title":"Son of Saul","year":2015,"director":"László Nemes","country":"Hungary","duration":"107 min","collection":"We Shall Overcome. (or not)","gradient":"linear-gradient(160deg,#150d1a,#20122a)","sym":"子","sunsong":"A member of the Sonderkommando at Auschwitz finds what he believes is his son among the dead. Nemes invented a new cinematic language for the unspeakable — one of the most important films ever made.","mubi":"https://mubi.com/films/son-of-saul","amazon":"https://www.amazon.com/s?k=son+of+saul+2015+nemes","jw":"https://www.justwatch.com/us/movie/son-of-saul"},"quo-vadis-aida":{"title":"Quo Vadis, Aida?","year":2020,"director":"Jasmila Žbanić","country":"Bosnia/Austria","duration":"104 min","collection":"We Shall Overcome. (or not)","gradient":"linear-gradient(160deg,#0f0f12,#1a1a20)","sym":"A","sunsong":"A UN interpreter desperately tries to save her family during the Srebrenica massacre. Žbanić puts you inside a genocide in real time — one of the most morally urgent films of the century.","mubi":"https://mubi.com/films/quo-vadis-aida","amazon":"https://www.amazon.com/s?k=quo+vadis+aida+2020","jw":"https://www.justwatch.com/us/movie/quo-vadis-aida"},"the-act-of-killing":{"title":"The Act of Killing","year":2012,"director":"Joshua Oppenheimer","country":"Denmark/Norway","duration":"122 min","collection":"We Shall Overcome. (or not)","gradient":"linear-gradient(160deg,#0a1215,#152030)","sym":"殺","sunsong":"Indonesian death squad leaders recreate their massacres in the style of their favourite movie genres. Oppenheimer made the most disturbing and original documentary ever made. Watch it. Then think.","mubi":"https://mubi.com/films/the-act-of-killing","amazon":"https://www.amazon.com/s?k=act+of+killing+oppenheimer","jw":"https://www.justwatch.com/us/movie/the-act-of-killing"},"everything-everywhere-all-at-once":{"title":"Everything Everywhere All at Once","year":2022,"director":"Daniel Kwan & Daniel Scheinert","country":"USA","duration":"139 min","collection":"Gimme a Break","gradient":"linear-gradient(160deg,#1a0a1a,#2a102a)","sym":"∞","sunsong":"A laundromat owner discovers she can access parallel universes through her body. The Daniels made a film about immigrant parents, generational trauma, and hot dog fingers that somehow saves the world.","mubi":"https://mubi.com/films/everything-everywhere-all-at-once","amazon":"https://www.amazon.com/s?k=everything+everywhere+all+at+once","jw":"https://www.justwatch.com/us/movie/everything-everywhere-all-at-once"},"the-full-monty":{"title":"The Full Monty","year":1997,"director":"Peter Cattaneo","country":"UK","duration":"91 min","collection":"Gimme a Break","gradient":"linear-gradient(160deg,#0a1520,#1a3040)","sym":"♛","sunsong":"Six unemployed Sheffield steelworkers become male strippers. Cattaneo's film is about dignity, male friendship, and the devastating aftermath of deindustrialisation — all wrapped in the warmest comedy.","mubi":"https://mubi.com/films/the-full-monty","amazon":"https://www.amazon.com/s?k=the+full+monty+1997","jw":"https://www.justwatch.com/us/movie/the-full-monty"},"singin-in-the-rain":{"title":"Singin' in the Rain","year":1952,"director":"Stanley Donen & Gene Kelly","country":"USA","duration":"103 min","collection":"Gimme a Break","gradient":"linear-gradient(160deg,#1a1208,#3d2b0a)","sym":"♪","sunsong":"Hollywood transitions from silent films to talkies, and a love story blooms in the chaos. The greatest musical ever made — and that title sequence in the rain is still the purest joy in cinema.","mubi":"https://mubi.com/films/singin-in-the-rain","amazon":"https://www.amazon.com/s?k=singin+in+the+rain+1952","jw":"https://www.justwatch.com/us/movie/singin-in-the-rain"},"legally-blonde":{"title":"Legally Blonde","year":2001,"director":"Robert Luketic","country":"USA","duration":"96 min","collection":"Gimme a Break","gradient":"linear-gradient(160deg,#0d1a0d,#122a12)","sym":"L","sunsong":"Elle Woods follows her ex-boyfriend to Harvard Law School and becomes the best student there. A film that pretends to be about pink and is actually about being underestimated — and proving everyone wrong.","mubi":"https://mubi.com/films/legally-blonde","amazon":"https://www.amazon.com/s?k=legally+blonde+2001+witherspoon","jw":"https://www.justwatch.com/us/movie/legally-blonde"},"paddington-2":{"title":"Paddington 2","year":2017,"director":"Paul King","country":"UK","duration":"103 min","collection":"Gimme a Break","gradient":"linear-gradient(160deg,#0f0a10,#1a1020)","sym":"P","sunsong":"Paddington Bear goes to prison. Paul King made a film so relentlessly kind that it briefly held the highest Rotten Tomatoes score of all time — and deserved every single percentage point.","mubi":"https://mubi.com/films/paddington-2","amazon":"https://www.amazon.com/s?k=paddington+2+2017","jw":"https://www.justwatch.com/us/movie/paddington-2"},"princess-mononoke":{"title":"Princess Mononoke","year":1997,"director":"Hayao Miyazaki","country":"Japan","duration":"134 min","collection":"Gimme a Break","gradient":"linear-gradient(160deg,#0a150a,#153015)","sym":"森","sunsong":"A young prince mediates a war between forest gods and an industrialising human settlement. Miyazaki refuses a villain — he refuses easy answers. The most morally complex animated film ever made.","mubi":"https://mubi.com/films/princess-mononoke","amazon":"https://www.amazon.com/s?k=princess+mononoke+miyazaki","jw":"https://www.justwatch.com/us/movie/princess-mononoke"},"clueless":{"title":"Clueless","year":1995,"director":"Amy Heckerling","country":"USA","duration":"97 min","collection":"Gimme a Break","gradient":"linear-gradient(160deg,#1a0d10,#2a1520)","sym":"C","sunsong":"A rich Beverly Hills teenager plays matchmaker and slowly discovers her own heart. Heckerling's Emma adaptation is sharper and funnier than it has any right to be — and ages better every year.","mubi":"https://mubi.com/films/clueless","amazon":"https://www.amazon.com/s?k=clueless+1995+heckerling","jw":"https://www.justwatch.com/us/movie/clueless"},"la-jetee":{"title":"La Jetée","year":1962,"director":"Chris Marker","country":"France","duration":"28 min","collection":"Even Dwarfs Once Started Small","gradient":"linear-gradient(160deg,#0f0f12,#1a1a20)","sym":"✈","sunsong":"A post-nuclear war experiment sends a man through time using still photographs — almost entirely. Marker made the most influential short film in history and proved cinema needs only an image and a voice.","mubi":"https://mubi.com/films/la-jetee","amazon":"https://www.amazon.com/s?k=la+jetee+chris+marker","jw":"https://www.justwatch.com/us/movie/la-jetee"},"an-occurrence-at-owl-creek-bridge":{"title":"An Occurrence at Owl Creek Bridge","year":1962,"director":"Robert Enrico","country":"France","duration":"28 min","collection":"Even Dwarfs Once Started Small","gradient":"linear-gradient(160deg,#0a1520,#1a3040)","sym":"⌛","sunsong":"A Confederate civilian is about to be hanged from a bridge when something extraordinary happens. Enrico's Palme d'Or-winning short is a perfect trap — and still one of the most moving films ever made.","mubi":"https://mubi.com/films/an-occurrence-at-owl-creek-bridge","amazon":"https://www.amazon.com/s?k=occurrence+owl+creek+bridge+enrico","jw":"https://www.justwatch.com/us/movie/an-occurrence-at-owl-creek-bridge"},"wasp":{"title":"Wasp","year":2003,"director":"Andrea Arnold","country":"UK","duration":"26 min","collection":"Even Dwarfs Once Started Small","gradient":"linear-gradient(160deg,#1a1208,#3d2b0a)","sym":"W","sunsong":"A young mother with four children tries to maintain the fiction of a date while leaving her kids outside a pub. Andrea Arnold's Oscar-winning short is raw, funny, and quietly devastating.","mubi":"https://mubi.com/films/wasp-2003","amazon":"https://www.amazon.com/s?k=wasp+2003+andrea+arnold","jw":"https://www.justwatch.com/us/movie/wasp-2003"},"the-new-tenants":{"title":"The New Tenants","year":2009,"director":"Joachim Back","country":"USA/Denmark","duration":"20 min","collection":"Even Dwarfs Once Started Small","gradient":"linear-gradient(160deg,#0d1a0d,#122a12)","sym":"N","sunsong":"A couple moves into a new apartment and receives a stream of increasingly surreal and violent visitors. The most perfectly constructed dark comedy short ever made — every second is precisely placed.","mubi":"https://mubi.com/films/the-new-tenants","amazon":"https://www.amazon.com/s?k=the+new+tenants+2009","jw":"https://www.justwatch.com/us/movie/the-new-tenants"},"two-distant-strangers":{"title":"Two Distant Strangers","year":2020,"director":"Travon Free & Martin Desmond Roe","country":"USA","duration":"32 min","collection":"Even Dwarfs Once Started Small","gradient":"linear-gradient(160deg,#150d1a,#20122a)","sym":"二","sunsong":"A Black man tries to get home to his dog but keeps dying at the hands of the same police officer — and waking up to repeat the day. A Groundhog Day of racial violence. Necessary, urgent, Oscar-winning.","mubi":"https://mubi.com/films/two-distant-strangers","amazon":"https://www.amazon.com/s?k=two+distant+strangers+2020","jw":"https://www.justwatch.com/us/movie/two-distant-strangers"},"stutterer":{"title":"Stutterer","year":2015,"director":"Benjamin Cleary","country":"UK/Ireland","duration":"13 min","collection":"Even Dwarfs Once Started Small","gradient":"linear-gradient(160deg,#1a0d0d,#2a1215)","sym":"S","sunsong":"A man with a severe stutter who lives in his head is about to meet his online girlfriend for the first time. Cleary's Oscar-winning short says more about loneliness and connection in 13 minutes than most films do in two hours.","mubi":"https://mubi.com/films/stutterer","amazon":"https://www.amazon.com/s?k=stutterer+2015+benjamin+cleary","jw":"https://www.justwatch.com/us/movie/stutterer"},"the-shore":{"title":"The Shore","year":2011,"director":"Terry George","country":"UK/Ireland","duration":"30 min","collection":"Even Dwarfs Once Started Small","gradient":"linear-gradient(160deg,#0a1215,#152030)","sym":"波","sunsong":"A man returns to Northern Ireland after 25 years to find his best friend married the woman he left behind. Terry George's Oscar-winning short captures the weight of a divided land and two lives unlived.","mubi":"https://mubi.com/films/the-shore","amazon":"https://www.amazon.com/s?k=the+shore+2011+terry+george","jw":"https://www.justwatch.com/us/movie/the-shore-2011"},"tar":{"title":"Tár","year":2022,"director":"Todd Field","country":"USA/Germany","duration":"158 min","collection":"Masterpieces of Now","gradient":"linear-gradient(160deg,#0a1520,#1a3040)","sym":"T","sunsong":"The fictional world's greatest conductor faces the unravelling of her career and sense of self. Cate Blanchett's performance is the greatest acting of the century so far — and Field's direction matches her.","mubi":"https://mubi.com/films/tar","amazon":"https://www.amazon.com/s?k=tar+2022+todd+field+cate+blanchett","jw":"https://www.justwatch.com/us/movie/tar-2022"},"all-quiet-on-the-western-front":{"title":"All Quiet on the Western Front","year":2022,"director":"Edward Berger","country":"Germany","duration":"148 min","collection":"Masterpieces of Now","gradient":"linear-gradient(160deg,#0f0f12,#1a1a20)","sym":"☮","sunsong":"A young German soldier discovers the truth of war on the Western Front. Berger's remake is the most visceral and despairing anti-war film since Come and See — mud, blood, and futility on an operatic scale.","mubi":"https://mubi.com/films/all-quiet-on-the-western-front-2022","amazon":"https://www.amazon.com/s?k=all+quiet+western+front+2022+berger","jw":"https://www.justwatch.com/us/movie/all-quiet-on-the-western-front-2022"},"the-power-of-the-dog":{"title":"The Power of the Dog","year":2021,"director":"Jane Campion","country":"New Zealand/UK","duration":"126 min","collection":"Masterpieces of Now","gradient":"linear-gradient(160deg,#0d1a0d,#122a12)","sym":"犬","sunsong":"A brutal Montana rancher torments his brother's new wife and stepson — until something shifts. Campion's patient, precise masterpiece is about repression, cruelty, and the violence men do to themselves.","mubi":"https://mubi.com/films/the-power-of-the-dog","amazon":"https://www.amazon.com/s?k=power+of+the+dog+jane+campion","jw":"https://www.justwatch.com/us/movie/the-power-of-the-dog"},"memoria":{"title":"Memoria","year":2021,"director":"Apichatpong Weerasethakul","country":"Colombia/Thailand","duration":"136 min","collection":"Masterpieces of Now","gradient":"linear-gradient(160deg,#1a1208,#3d2b0a)","sym":"記","sunsong":"A Scottish woman in Colombia is haunted by a mysterious sound only she can hear. Weerasethakul asks what it means to carry the memory of a planet. Tilda Swinton exists in a different dimension here.","mubi":"https://mubi.com/films/memoria-2021","amazon":"https://www.amazon.com/s?k=memoria+2021+weerasethakul","jw":"https://www.justwatch.com/us/movie/memoria-2021"},"beau-is-afraid":{"title":"Beau Is Afraid","year":2023,"director":"Ari Aster","country":"USA","duration":"179 min","collection":"Masterpieces of Now","gradient":"linear-gradient(160deg,#150d1a,#20122a)","sym":"B","sunsong":"A deeply anxious man attempts to visit his mother and undergoes an odyssey of nightmarish proportions. Ari Aster made a three-hour Freudian fever dream that is utterly divisive — and completely unforgettable.","mubi":"https://mubi.com/films/beau-is-afraid","amazon":"https://www.amazon.com/s?k=beau+is+afraid+ari+aster","jw":"https://www.justwatch.com/us/movie/beau-is-afraid"},"the-fabelmans":{"title":"The Fabelmans","year":2022,"director":"Steven Spielberg","country":"USA","duration":"151 min","collection":"Masterpieces of Now","gradient":"linear-gradient(160deg,#1a0d0d,#2a1215)","sym":"映","sunsong":"Spielberg's autobiographical film about a boy who discovers cinema — and what cinema costs a family. The most personal work of the greatest popular filmmaker alive. Both a gift and a confession.","mubi":"https://mubi.com/films/the-fabelmans","amazon":"https://www.amazon.com/s?k=the+fabelmans+spielberg+2022","jw":"https://www.justwatch.com/us/movie/the-fabelmans"},"decision-to-leave":{"title":"Decision to Leave","year":2022,"director":"Park Chan-wook","country":"South Korea","duration":"138 min","collection":"Masterpieces of Now","gradient":"linear-gradient(160deg,#0a1215,#152030)","sym":"決","sunsong":"A detective investigating a suspicious death becomes obsessed with the widow — who may be his prime suspect. Park Chan-wook at his most elegant, spinning a romantic thriller of impossible intricacy.","mubi":"https://mubi.com/films/decision-to-leave","amazon":"https://www.amazon.com/s?k=decision+to+leave+park+chan+wook","jw":"https://www.justwatch.com/us/movie/decision-to-leave"},"asteroid-city":{"title":"Asteroid City","year":2023,"director":"Wes Anderson","country":"Germany/Spain","duration":"105 min","collection":"Masterpieces of Now","gradient":"linear-gradient(160deg,#0f0a10,#1a1020)","sym":"★","sunsong":"A 1955 junior stargazer competition in a tiny American desert town is disrupted by a cosmic event. Anderson's most experimental film — a play within a TV show within a film — about grief and the impossibility of closure.","mubi":"https://mubi.com/films/asteroid-city","amazon":"https://www.amazon.com/s?k=asteroid+city+wes+anderson+2023","jw":"https://www.justwatch.com/us/movie/asteroid-city"}};
+
+// Title → ID lookup
+// ═══════════════════════════════════════════════════════════
+// AFFILIATE CODES — vul deze twee regels in zodra je ze hebt
+// ═══════════════════════════════════════════════════════════
+const MUBI_REF    = '';   // ← jouw MUBI ref ID van impact.com  (bv. 'sunsong42')
+const AMAZON_TAG  = '';   // ← jouw Amazon Associates tag        (bv. 'sunsong-21')
+// ═══════════════════════════════════════════════════════════
+
+const TITLE_MAP = {};
+Object.entries(FILMS).forEach(([id,f]) => { TITLE_MAP[f.title.toLowerCase()] = id; });
+function getFilmId(title) { return TITLE_MAP[title.toLowerCase()]; }
+
+// Bouw affiliate links — valt terug op basislink als code nog leeg is
+function mubiLink(baseUrl) {
+  if (!MUBI_REF) return baseUrl;
+  return baseUrl + (baseUrl.includes('?') ? '&' : '?') + 'ref=' + MUBI_REF;
+}
+function amazonLink(title, year) {
+  const q = encodeURIComponent(title + ' ' + year + ' film');
+  const base = 'https://www.amazon.com/s?k=' + q;
+  if (!AMAZON_TAG) return base;
+  return base + '&tag=' + AMAZON_TAG;
+}
+function jwLink(baseUrl) {
+  // JustWatch heeft geen affiliate — dit is de gratis fallback
+  return baseUrl;
+}
+
+function openFilmModal(title) {
+  const id = getFilmId(title);
+  const film = id ? FILMS[id] : null;
+  if (!film) return;
+
+  const mubi    = mubiLink(film.mubi);
+  const amazon  = amazonLink(film.title, film.year);
+  const jw      = jwLink(film.jw);
+
+  // Toon commissie-indicator als affiliate actief is
+  const mubiLabel  = MUBI_REF   ? 'Watch on MUBI <span class="fm-commission">~10% commissie</span>'   : 'Watch on MUBI';
+  const amazonLabel= AMAZON_TAG ? 'Rent or Buy <span class="fm-commission">3-5% commissie</span>'      : 'Rent or Buy';
+
+  const body = document.getElementById('filmModalBody');
+  body.innerHTML = `
+    <div class="fm-poster-col">
+      <div class="fm-poster" style="background:${film.gradient}">
+        <div class="fm-poster-sym">${film.sym}</div>
+        <div class="fm-poster-badge">${film.collection}</div>
+      </div>
+    </div>
+    <div class="fm-info-col">
+      <div class="fm-meta">${film.country} · ${film.year} · ${film.duration}</div>
+      <div class="fm-title">${film.title}</div>
+      <div class="fm-director">directed by ${film.director}</div>
+      <div class="fm-divider"></div>
+      <div class="fm-label">Sunsong Cinema recommends</div>
+      <div class="fm-sunsong">${film.sunsong}</div>
+      <div class="fm-divider"></div>
+      <div class="fm-label">Watch this film</div>
+      <div class="fm-links">
+        <a class="fm-btn fm-btn-primary" href="${mubi}" target="_blank" rel="noopener">
+          <span class="fm-btn-icon">▶</span>${mubiLabel}
+        </a>
+        <a class="fm-btn fm-btn-secondary" href="${amazon}" target="_blank" rel="noopener">
+          ${amazonLabel}<span class="fm-btn-sub">Amazon Video</span>
+        </a>
+        <a class="fm-btn fm-btn-ghost" href="${jw}" target="_blank" rel="noopener">All streaming options via JustWatch →</a>
+      </div>
+      <div class="fm-share-row">
+        <span class="fm-share-label">Share</span>
+        <button class="fm-share-btn" onclick="shareFilmWA('${film.title.replace(/'/g,"\\'")}')">WhatsApp</button>
+        <button class="fm-share-btn" onclick="shareFilmMail('${film.title.replace(/'/g,"\\'")}')">Email</button>
+        <button class="fm-share-btn" onclick="copyFilmLink()">Copy link</button>
+      </div>
+    </div>`;
+  document.getElementById('filmModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeFilmModal() {
+  document.getElementById('filmModal').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function shareFilmWA(title) {
+  window.open('https://wa.me/?text=' + encodeURIComponent('I want to share "' + title + '" with you. Find it on Sunsong Cinema: https://sunsongcinema.com'), '_blank');
+}
+function shareFilmMail(title) {
+  window.open('mailto:?subject=' + encodeURIComponent('A film for you: ' + title) + '&body=' + encodeURIComponent('I want to share "' + title + '" with you.\n\nFind it on Sunsong Cinema: https://sunsongcinema.com'));
+}
+function copyFilmLink() {
+  navigator.clipboard.writeText('https://sunsongcinema.com').then(() => {
+    const btn = event.target; btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy link', 2000);
+  });
+}
+document.addEventListener('keydown', e => { if(e.key === 'Escape') closeFilmModal(); });
+</script>
+</body>
+</html>
