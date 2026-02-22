@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sunsong Cinema</title>
+<meta name="description" content="Film is like love, give it and it's a gift that keeps giving.">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Cinzel:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--black:#080705;--warm:#0e0c09;--gold:#c8a44a;--gl:#e5d098;--gd:rgba(200,164,74,0.1);--cream:#f2ebe0;--dim:#635a4f;--text:#e0d8cc;--border:rgba(200,164,74,0.12)}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--black);color:var(--text);font-family:"DM Sans",sans-serif;font-weight:300;min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:0.3;mix-blend-mode:overlay}
+
+/* HEADER */
+header{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 48px;display:flex;justify-content:space-between;align-items:center;background:linear-gradient(to bottom,rgba(8,7,5,0.95) 0%,transparent 100%);transition:background 0.4s}
+header.scrolled{background:rgba(8,7,5,0.97);border-bottom:1px solid var(--border)}
+.logo{font-family:"Cinzel",serif;font-size:17px;font-weight:600;letter-spacing:0.2em;color:var(--gold);text-decoration:none}
+.logo span{color:var(--cream);font-weight:400}
+nav{display:flex;gap:32px;align-items:center}
+nav a{font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--dim);text-decoration:none;transition:color 0.2s}
+nav a:hover{color:var(--gold)}
+.nav-cta{background:var(--gold);color:var(--black)!important;padding:9px 22px}
+.nav-cta:hover{background:var(--gl)!important}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;padding:120px 48px 80px;text-align:center;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(122,58,16,.15) 0%,transparent 50%),radial-gradient(ellipse at 80% 30%,rgba(200,164,74,.07) 0%,transparent 45%),radial-gradient(ellipse at 50% 80%,rgba(60,30,10,.2) 0%,transparent 60%)}
+.hero-lines{position:absolute;inset:0;background-image:linear-gradient(rgba(200,164,74,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(200,164,74,.03) 1px,transparent 1px);background-size:80px 80px;mask-image:radial-gradient(ellipse at center,black 20%,transparent 75%)}
+.hero-content{position:relative;z-index:2;max-width:860px}
+.hero-eyebrow{font-size:10px;letter-spacing:0.32em;text-transform:uppercase;color:var(--gold);margin-bottom:28px;display:flex;align-items:center;justify-content:center;gap:16px;opacity:0;animation:fadeUp 1s 0.2s forwards}
+.hero-eyebrow::before,.hero-eyebrow::after{content:'';width:40px;height:1px;background:var(--gold);opacity:.4}
+.hero-title{font-family:"Cormorant Garamond",serif;font-size:clamp(32px,4.5vw,64px);font-weight:300;line-height:1.05;color:var(--cream);margin-bottom:4px;opacity:0;animation:fadeUp 1.2s 0.4s forwards}
+.hero-title em{font-style:italic;color:var(--gl)}
+.hero-title-2{font-family:"Cormorant Garamond",serif;font-size:clamp(32px,4.5vw,64px);font-weight:300;line-height:1.05;color:var(--cream);margin-bottom:44px;opacity:0;animation:fadeUp 1.2s 0.6s forwards}
+.hero-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;opacity:0;animation:fadeUp 1s 0.8s forwards}
+.btn-primary{background:var(--gold);color:var(--black);border:none;padding:16px 44px;font-family:"DM Sans",sans-serif;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:10px;transition:all 0.25s}
+.btn-primary:hover{background:var(--gl);transform:translateY(-2px)}
+.btn-secondary{background:transparent;color:var(--text);border:1px solid var(--border);padding:16px 44px;font-family:"DM Sans",sans-serif;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:10px;transition:all 0.25s}
+.btn-secondary:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-2px)}
+.hero-scroll{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;animation:fadeIn 1s 1.4s forwards}
+.scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,var(--gold),transparent);animation:scrollPulse 2s ease-in-out infinite}
+.scroll-text{font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--dim)}
+@keyframes scrollPulse{0%,100%{opacity:.4}50%{opacity:1}}
+
+/* COLLECTIONS */
+.collections{padding:100px 48px;position:relative}
+.collections::after{content:'';position:absolute;bottom:0;left:48px;right:48px;height:1px;background:linear-gradient(to right,transparent,var(--gold),transparent);opacity:.15}
+.coll-inner{max-width:1200px;margin:0 auto}
+.coll-intro{font-family:"Cormorant Garamond",serif;font-size:clamp(22px,3vw,38px);font-style:italic;color:var(--dim);line-height:1.55;margin-bottom:60px;max-width:800px}
+.coll-item{border-top:1px solid var(--border);padding:48px 0}
+.coll-item:last-child{border-bottom:1px solid var(--border)}
+
+/* 4-column grid, all cards equal */
+.coll-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.coll-grid-row2{margin-top:20px}
+
+/* Title card — same size as film card, text fills entire card */
+.coll-title-card{
+  aspect-ratio:2/3;
+  background:linear-gradient(145deg,#12100a,#1c1810);
+  border:1px solid rgba(200,164,74,0.3);
+  padding:20px 18px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:flex-start;
+  position:relative;
+  overflow:hidden;
+  cursor:default;
+}
+.coll-title-card::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(ellipse at 10% 90%,rgba(200,164,74,0.14) 0%,transparent 55%),
+    radial-gradient(ellipse at 90% 10%,rgba(200,100,20,0.08) 0%,transparent 50%);
+}
+.ctc-top{
+  position:absolute;
+  top:18px;
+  left:18px;
+  right:18px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  z-index:2;
+}
+.ctc-num{
+  font-family:"Cinzel",serif;
+  font-size:9px;
+  color:rgba(200,164,74,0.5);
+  letter-spacing:0.24em;
+}
+.ctc-label{
+  font-size:7px;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  color:rgba(200,164,74,0.25);
+}
+.ctc-bg-num{
+  position:absolute;
+  font-family:"Cinzel",serif;
+  font-size:120px;
+  font-weight:700;
+  color:rgba(200,164,74,0.05);
+  line-height:1;
+  bottom:-8px;
+  right:-4px;
+  z-index:1;
+  user-select:none;
+  pointer-events:none;
+}
+.ctc-bottom{
+  position:relative;
+  z-index:2;
+  width:100%;
+}
+.ctc-name{
+  font-family:"Cormorant Garamond",serif;
+  font-size:clamp(20px,2.2vw,30px);
+  font-weight:400;
+  color:var(--cream);
+  line-height:1.15;
+  margin-bottom:14px;
+}
+.ctc-divider{
+  width:28px;
+  height:1px;
+  background:var(--gold);
+  opacity:0.6;
+  margin-bottom:12px;
+}
+.ctc-genre{
+  font-family:"Cormorant Garamond",serif;
+  font-size:26px;
+  font-style:italic;
+  color:var(--gold);
+  line-height:1.3;
+}
+
+/* Film cards */
+.film-card{display:flex;flex-direction:column;text-decoration:none;transition:transform 0.25s;cursor:pointer}
+.film-card:hover{transform:translateY(-4px)}
+.film-poster{aspect-ratio:2/3;border:1px solid var(--border);overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;margin-bottom:10px;transition:border-color 0.25s}
+.film-card:hover .film-poster{border-color:rgba(200,164,74,.5)}
+.film-poster-bg{position:absolute;inset:0;opacity:.75}
+.film-poster-sym{font-family:"Cormorant Garamond",serif;font-size:40px;opacity:.09;color:var(--cream);position:relative;z-index:1;user-select:none}
+.film-play{position:absolute;bottom:8px;right:8px;width:32px;height:32px;background:var(--gold);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--black);opacity:0;transition:opacity 0.2s;z-index:2}
+.film-card:hover .film-play{opacity:1}
+.film-title{font-family:"Cormorant Garamond",serif;font-size:17px;color:var(--text);line-height:1.3;transition:color 0.2s}
+.film-card:hover .film-title{color:var(--gl)}
+.film-year{font-size:11px;color:var(--dim);margin-top:4px;letter-spacing:.06em}
+
+/* SATELLITE */
+.coll-satellite{
+  margin-top:40px;
+  background: radial-gradient(ellipse at 20% 50%, rgba(200,130,20,0.15) 0%, transparent 55%),
+              radial-gradient(ellipse at 80% 50%, rgba(200,164,74,0.05) 0%, transparent 50%),
+              var(--warm);
+  border:1px solid rgba(200,164,74,0.25);
+  position:relative;
+  overflow:hidden;
+  min-height:280px;
+  display:flex;
+  align-items:center;
+  gap:0;
+}
+.coll-satellite::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background: repeating-conic-gradient(
+    from 0deg at 14% 50%,
+    rgba(200,164,74,0.03) 0deg,
+    transparent 5deg,
+    transparent 18deg
+  );
+  pointer-events:none;
+}
+.sat-sun{
+  flex-shrink:0;
+  width:200px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  padding:40px 30px;
+}
+.sat-orb{
+  position:relative;
+  width:110px;
+  height:110px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.sat-orb-ring{
+  position:absolute;
+  border-radius:50%;
+  border:1px solid rgba(200,164,74,0.25);
+  animation:orbitPulse 4s ease-in-out infinite;
+}
+.sat-orb-ring-1{width:100%;height:100%;animation-delay:0s}
+.sat-orb-ring-2{width:160%;height:160%;animation-delay:0.7s;border-color:rgba(200,164,74,0.14)}
+.sat-orb-ring-3{width:230%;height:230%;animation-delay:1.4s;border-color:rgba(200,164,74,0.07)}
+@keyframes orbitPulse{
+  0%,100%{transform:scale(1);opacity:0.6}
+  50%{transform:scale(1.05);opacity:1}
+}
+.sat-orb-core{
+  font-size:64px;
+  position:relative;
+  z-index:2;
+  color:var(--gold);
+  animation:sunGlow 3s ease-in-out infinite;
+  filter:drop-shadow(0 0 16px rgba(200,164,74,0.7));
+}
+@keyframes sunGlow{
+  0%,100%{filter:drop-shadow(0 0 12px rgba(200,164,74,0.5));color:#c8a44a}
+  50%{filter:drop-shadow(0 0 30px rgba(229,208,152,0.9));color:#e5d098}
+}
+.sat-content{
+  flex:1;
+  padding:48px 40px;
+  position:relative;
+  z-index:2;
+  border-left:1px solid rgba(200,164,74,0.12);
+}
+.sat-title{
+  font-family:"Cormorant Garamond",serif;
+  font-size:clamp(48px,6vw,88px);
+  font-weight:300;
+  line-height:0.95;
+  color:var(--cream);
+  margin-bottom:28px;
+  font-style:italic;
+}
+.sat-desc{
+  font-family:"Cormorant Garamond",serif;
+  font-size:clamp(16px,1.6vw,20px);
+  font-style:italic;
+  color:rgba(224,216,204,0.5);
+  line-height:1.75;
+  max-width:500px;
+}
+.sat-film{
+  flex-shrink:0;
+  padding:40px 40px 40px 32px;
+  width:180px;
+  position:relative;
+  z-index:2;
+  border-left:1px solid rgba(200,164,74,0.12);
+  display:flex;
+  align-items:center;
+}
+.sat-film-sym{
+  font-size:48px;
+  opacity:0.25;
+  color:var(--gold);
+  position:relative;
+  z-index:1;
+  user-select:none;
+  animation:sunGlow 3s ease-in-out infinite;
+}
+@media(max-width:900px){
+  .coll-satellite{flex-direction:column;min-height:auto}
+  .sat-sun{width:100%;padding:40px 0 20px}
+  .sat-content{padding:24px;border-left:none;border-top:1px solid rgba(200,164,74,0.12)}
+  .sat-film{width:100%;padding:24px;border-left:none;border-top:1px solid rgba(200,164,74,0.12);justify-content:center}
+  .sat-film .film-card{width:140px}
+}
+
+/* MANIFESTO */
+.manifesto{padding:100px 48px;max-width:1200px;margin:0 auto;position:relative}
+.manifesto::before{content:'';position:absolute;top:0;left:48px;right:48px;height:1px;background:linear-gradient(to right,transparent,var(--gold),transparent);opacity:.2}
+.manifesto-inner{display:grid;grid-template-columns:200px 1fr;gap:80px;align-items:start}
+.manifesto-label{font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);padding-top:6px;position:sticky;top:100px}
+.manifesto-label::after{content:'';display:block;width:30px;height:1px;background:var(--gold);margin-top:12px;opacity:.4}
+.manifesto-text{font-family:"Cormorant Garamond",serif;font-size:clamp(16px,1.6vw,20px);font-weight:300;line-height:1.8;color:var(--cream)}
+.manifesto-text .hl{font-style:italic;color:var(--gl)}
+.manifesto-text p{margin-bottom:24px}
+.manifesto-text p:last-child{margin-bottom:0}
+.manifesto-closing{font-family:"Cormorant Garamond",serif;font-size:18px;font-style:italic;color:rgba(200,164,74,.6);margin-top:40px;padding-top:40px;border-top:1px solid var(--border);text-align:right}
+
+/* SHARE */
+.share-section{padding:100px 48px;background:var(--warm);position:relative;overflow:hidden}
+.share-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 100%,rgba(200,164,74,.05) 0%,transparent 60%)}
+.share-inner{max-width:800px;margin:0 auto;text-align:center;position:relative;z-index:2}
+.share-eyebrow{font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;display:flex;align-items:center;justify-content:center;gap:12px}
+.share-eyebrow::before,.share-eyebrow::after{content:'';width:30px;height:1px;background:var(--gold);opacity:.4}
+.share-title{font-family:"Cormorant Garamond",serif;font-size:clamp(30px,4vw,50px);font-weight:300;color:var(--cream);line-height:1.15;margin-bottom:16px}
+.share-title em{font-style:italic;color:var(--gl)}
+.share-sub{font-size:15px;color:var(--dim);line-height:1.7;margin-bottom:40px;max-width:520px;margin-left:auto;margin-right:auto}
+.share-input-wrap{background:rgba(255,255,255,.02);border:1px solid var(--border);padding:20px 24px;margin-bottom:24px;transition:border-color .3s}
+.share-input-wrap:focus-within{border-color:rgba(200,164,74,.4)}
+.share-input-label{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin-bottom:8px;text-align:left}
+.share-input{width:100%;background:transparent;border:none;outline:none;color:var(--text);font-size:16px;font-family:"Cormorant Garamond",serif;font-style:italic;font-weight:300}
+.share-input::placeholder{color:rgba(99,90,79,.4)}
+.share-channels{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px}
+.share-ch{display:flex;flex-direction:column;align-items:center;gap:8px;padding:18px 12px;border:1px solid var(--border);background:transparent;color:var(--dim);cursor:pointer;transition:all .22s;font-family:"DM Sans",sans-serif;text-decoration:none}
+.share-ch:hover{border-color:var(--gold);color:var(--gold);background:var(--gd)}
+.share-ch-icon{font-size:20px}
+.share-ch-name{font-size:10px;letter-spacing:.12em;text-transform:uppercase}
+.share-more{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.share-more-btn{display:flex;align-items:center;gap:8px;padding:10px 18px;border:1px solid var(--border);background:transparent;color:var(--dim);cursor:pointer;transition:all .22s;font-family:"DM Sans",sans-serif;font-size:11px;letter-spacing:.1em;text-decoration:none}
+.share-more-btn:hover{border-color:var(--gold);color:var(--gold)}
+.copy-link-row{display:flex;margin-top:16px}
+.copy-link-input{flex:1;background:rgba(255,255,255,.02);border:1px solid var(--border);border-right:none;color:var(--dim);padding:12px 16px;font-size:12px;font-family:"DM Sans",sans-serif;outline:none}
+.copy-link-btn{background:rgba(200,164,74,.12);border:1px solid rgba(200,164,74,.3);color:var(--gold);padding:12px 24px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;font-family:"DM Sans",sans-serif;transition:all .2s;white-space:nowrap}
+.copy-link-btn:hover{background:rgba(200,164,74,.2)}
+.share-success{display:none;background:rgba(30,100,50,.15);border:1px solid rgba(50,180,100,.2);padding:14px 20px;font-size:13px;color:#70e0a0;margin-top:12px;text-align:center}
+.share-success.visible{display:block}
+
+/* FIND */
+.find-section{padding:120px 48px;text-align:center;position:relative}
+.find-inner{max-width:720px;margin:0 auto}
+.find-eyebrow{font-size:10px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;display:flex;align-items:center;justify-content:center;gap:16px}
+.find-eyebrow::before,.find-eyebrow::after{content:'';width:40px;height:1px;background:var(--gold);opacity:.4}
+.find-title{font-family:"Cormorant Garamond",serif;font-size:clamp(32px,4.5vw,60px);font-weight:300;color:var(--cream);line-height:1.1;margin-bottom:20px}
+.find-title em{font-style:italic;color:var(--gl)}
+.find-sub{font-size:15px;color:var(--dim);line-height:1.75;margin-bottom:40px;max-width:600px;margin-left:auto;margin-right:auto}
+
+/* FOOTER */
+footer{padding:40px 48px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px}
+.footer-logo{font-family:"Cinzel",serif;font-size:14px;color:var(--gold);letter-spacing:.16em}
+.footer-tagline{font-family:"Cormorant Garamond",serif;font-size:13px;font-style:italic;color:var(--dim)}
+.footer-links{display:flex;gap:24px}
+.footer-links a{font-size:11px;color:var(--dim);text-decoration:none;transition:color .2s}
+.footer-links a:hover{color:var(--gold)}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.8s ease,transform 0.8s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  header{padding:18px 24px}
+  .hero{padding:100px 24px 60px}
+  .collections{padding:80px 24px}
+  .coll-grid{grid-template-columns:repeat(2,1fr)}
+  .coll-title-card{grid-column:1/3;grid-row:auto;min-height:auto;padding:24px}
+  .manifesto{padding:80px 24px}
+  .manifesto-inner{grid-template-columns:1fr;gap:32px}
+  .manifesto-label{position:static}
+  .share-section{padding:80px 24px}
+  .find-section{padding:80px 24px}
+  footer{padding:32px 24px;flex-direction:column;text-align:center}
+  .sat-inner{flex-direction:column;gap:16px;align-items:flex-start}
+  .sat-desc{border-left:none;padding-left:0;border-top:1px solid rgba(200,164,74,.2);padding-top:16px}
+}
+</style>
+</head>
+<body>
+
+<header id="hdr">
+  <a href="/" class="logo">Sunsong <span>Cinema</span></a>
+  <nav>
+    <a href="#collections">Collections</a>
+    <a href="#share">Share</a>
+    <a href="find.html" class="nav-cta">Find My Film</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-lines"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">World Cinema</div>
+    <div class="hero-title">Film is like <em>love,</em> give it</div>
+    <div class="hero-title-2">and you get a gift that keeps giving.</div>
+    <div class="hero-actions">
+      <a href="find.html" class="btn-primary">Find My Film →</a>
+      <a href="#share" class="btn-secondary">Share a Film</a>
+    </div>
+  </div>
+  <div class="hero-scroll"><div class="scroll-line"></div><div class="scroll-text">Scroll</div></div>
+</section>
+
+<section class="collections" id="collections">
+  <div class="coll-inner">
+    <p class="coll-intro reveal">we cannot look directly at the sun — so sunsong cinema offers eight collections orbiting it like planets</p>
+
+
+
+    <!-- 01 -->
+    <div class="coll-item reveal">
+      <div class="coll-grid">
+        <div class="coll-title-card">
+          <div class="ctc-top"><div class="ctc-num">Collectie 01</div><div class="ctc-label">Sunsong Cinema</div></div>
+          <div class="ctc-bg-num">01</div>
+          <div class="ctc-bottom"><div class="ctc-name">The Magnificent Seven</div><div class="ctc-divider"></div><div class="ctc-genre">Seven Classics</div></div>
+        </div>
+        <a class="film-card" href="#"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0a1520,#1a3040)"></div><div class="film-poster-sym">映</div><div class="film-play">▶</div></div><div class="film-title">Tokyo Story</div><div class="film-year">1953</div></a><a class="film-card" href="#"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#1a1208,#3d2b0a)"></div><div class="film-poster-sym">自</div><div class="film-play">▶</div></div><div class="film-title">Bicycle Thieves</div><div class="film-year">1948</div></a><a class="film-card" href="#"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0d1a0d,#122a12)"></div><div class="film-poster-sym">羅</div><div class="film-play">▶</div></div><div class="film-title">Rashomon</div><div class="film-year">1950</div></a>
+      </div>
+      <div class="coll-grid coll-grid-row2">
+        <a class="film-card" href="#"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#1a0d0d,#2a1215)"></div><div class="film-poster-sym">四</div><div class="film-play">▶</div></div><div class="film-title">The 400 Blows</div><div class="film-year">1959</div></a><a class="film-card" href="#"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#150d1a,#20122a)"></div><div class="film-poster-sym">8½</div><div class="film-play">▶</div></div><div class="film-title">8½</div><div class="film-year">1963</div></a><a class="film-card" href="#"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0f0f12,#1a1a20)"></div><div class="film-poster-sym">À</div><div class="film-play">▶</div></div><div class="film-title">Breathless</div><div class="film-year">1960</div></a><a class="film-card" href="#"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0a1215,#152030)"></div><div class="film-poster-sym">Ст</div><div class="film-play">▶</div></div><div class="film-title">Stalker</div><div class="film-year">1979</div></a>
+      </div>
+    </div>
+
+    <!-- 02 -->
+    <div class="coll-item reveal">
+      <div class="coll-grid">
+        <div class="coll-title-card">
+          <div class="ctc-top"><div class="ctc-num">Collectie 02</div><div class="ctc-label">Sunsong Cinema</div></div>
+          <div class="ctc-bg-num">02</div>
+          <div class="ctc-bottom"><div class="ctc-name">We Can Even Make a Pillar of Salt Laugh</div><div class="ctc-divider"></div><div class="ctc-genre">Seven Comedies</div></div>
+        </div>
+        <a class="film-card" href="#"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#1a1208,#3d2b0a)"></div><div class="film-poster-sym">♨</div><div class="film-play">▶</div></div><div class="film-title">Some Like It Hot</div><div class="film-year">1959</div></a><a class="film-card" href="#"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0a1520,#1a3040)"></div><div class="film-poster-sym">∞</div><div class="film-play">▶</div></div><div class="film-title">The Grand Budapest Hotel</div><div class="film-year">2014</div></a><a class="film-card" href="#"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#150d1a,#20122a)"></div><div class="film-poster-sym">Â</div><div class="film-play">▶</div></div><div class="film-title">Amélie</div><div class="film-year">2001</div></a>
+      </div>
+      <div class="coll-grid coll-grid-row2">
+        <a class="film-card" href="#"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0d1a0d,#122a12)"></div><div class="film-poster-sym">麺</div><div class="film-play">▶</div></div><div class="film-title">Tampopo</div><div class="film-year">1985</div></a><a class="film-card" href="#"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#1a0d0d,#2a1215)"></div><div class="film-poster-sym">☪</div><div class="film-play">▶</div></div><div class="film-title">Four Lions</div><div class="film-year">2010</div></a><a class="film-card" href="#"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0f0f12,#1a1a20)"></div><div class="film-poster-sym">♞</div><div class="film-play">▶</div></div><div class="film-title">The Lobster</div><div class="film-year">2015</div></a><a class="film-card" href="#"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0a1215,#152030)"></div><div class="film-poster-sym">寄</div><div class="film-play">▶</div></div><div class="film-title">Parasite</div><div class="film-year">2019</div></a>
+      </div>
+    </div>
+
+    <!-- 03 -->
+    <div class="coll-item reveal">
+      <div class="coll-grid">
+        <div class="coll-title-card">
+          <div class="ctc-top"><div class="ctc-num">Collectie 03</div><div class="ctc-label">Sunsong Cinema</div></div>
+          <div class="ctc-bg-num">03</div>
+          <div class="ctc-bottom"><div class="ctc-name">All for Love</div><div class="ctc-divider"></div><div class="ctc-genre">Seven Romances</div></div>
+        </div>
+        <a class="film-card" href="#"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#1a0a0a,#2a1010)"></div><div class="film-poster-sym">花</div><div class="film-play">▶</div></div><div class="film-title">In the Mood for Love</div><div class="film-year">2000</div></a><a class="film-card" href="#"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0a1a12,#102a18)"></div><div class="film-poster-sym">炎</div><div class="film-play">▶</div></div><div class="film-title">Portrait of a Lady on Fire</div><div class="film-year">2019</div></a><a class="film-card" href="#"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0a0a1a,#10102a)"></div><div class="film-poster-sym">☀</div><div class="film-play">▶</div></div><div class="film-title">Eternal Sunshine</div><div class="film-year">2004</div></a>
+      </div>
+      <div class="coll-grid coll-grid-row2">
+        <a class="film-card" href="#"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#1a1208,#3d2b0a)"></div><div class="film-poster-sym">山</div><div class="film-play">▶</div></div><div class="film-title">Brokeback Mountain</div><div class="film-year">2005</div></a><a class="film-card" href="#"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0a1520,#1a3040)"></div><div class="film-poster-sym">日</div><div class="film-play">▶</div></div><div class="film-title">Before Sunrise</div><div class="film-year">1995</div></a><a class="film-card" href="#"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#1a0d0d,#2a1215)"></div><div class="film-poster-sym">Y</div><div class="film-play">▶</div></div><div class="film-title">Y Tu Mamá También</div><div class="film-year">2001</div></a><a class="film-card" href="#"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0f0a12,#1a1020)"></div><div class="film-poster-sym">♡</div><div class="film-play">▶</div></div><div class="film-title">Carol</div><div class="film-year">2015</div></a>
+      </div>
+    </div>
+
+    <!-- 04 -->
+    <div class="coll-item reveal">
+      <div class="coll-grid">
+        <div class="coll-title-card">
+          <div class="ctc-top"><div class="ctc-num">Collectie 04</div><div class="ctc-label">Sunsong Cinema</div></div>
+          <div class="ctc-bg-num">04</div>
+          <div class="ctc-bottom"><div class="ctc-name">Where Are We Now?</div><div class="ctc-divider"></div><div class="ctc-genre">Seven Films Close to the Skin of Our Times</div></div>
+        </div>
+        <a class="film-card" href="#"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#1a1208,#3d2b0a)"></div><div class="film-poster-sym">地</div><div class="film-play">▶</div></div><div class="film-title">Capernaum</div><div class="film-year">2018</div></a><a class="film-card" href="#"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0a1520,#1a3040)"></div><div class="film-poster-sym">T</div><div class="film-play">▶</div></div><div class="film-title">Toni Erdmann</div><div class="film-year">2016</div></a><a class="film-card" href="#"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#150d1a,#20122a)"></div><div class="film-poster-sym">□</div><div class="film-play">▶</div></div><div class="film-title">The Square</div><div class="film-year">2017</div></a>
+      </div>
+      <div class="coll-grid coll-grid-row2">
+        <a class="film-card" href="#"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0d1a0d,#122a12)"></div><div class="film-poster-sym">光</div><div class="film-play">▶</div></div><div class="film-title">Aftersun</div><div class="film-year">2022</div></a><a class="film-card" href="#"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#1a0d0d,#2a1215)"></div><div class="film-poster-sym">車</div><div class="film-play">▶</div></div><div class="film-title">Drive My Car</div><div class="film-year">2021</div></a><a class="film-card" href="#"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0f0f12,#1a1a20)"></div><div class="film-poster-sym">L</div><div class="film-play">▶</div></div><div class="film-title">Licorice Pizza</div><div class="film-year">2021</div></a><a class="film-card" href="#"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0a1215,#152030)"></div><div class="film-poster-sym">過</div><div class="film-play">▶</div></div><div class="film-title">Past Lives</div><div class="film-year">2023</div></a>
+      </div>
+    </div>
+
+    <!-- 05 -->
+    <div class="coll-item reveal">
+      <div class="coll-grid">
+        <div class="coll-title-card">
+          <div class="ctc-top"><div class="ctc-num">Collectie 05</div><div class="ctc-label">Sunsong Cinema</div></div>
+          <div class="ctc-bg-num">05</div>
+          <div class="ctc-bottom"><div class="ctc-name">We Shall Overcome. (or not)</div><div class="ctc-divider"></div><div class="ctc-genre">Seven Political Films</div></div>
+        </div>
+        <a class="film-card" href="#"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#1a0d0d,#2a1215)"></div><div class="film-poster-sym">✊</div><div class="film-play">▶</div></div><div class="film-title">The Battle of Algiers</div><div class="film-year">1966</div></a><a class="film-card" href="#"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0a1520,#1a3040)"></div><div class="film-poster-sym">Z</div><div class="film-play">▶</div></div><div class="film-title">Z</div><div class="film-year">1969</div></a><a class="film-card" href="#"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0d1a0d,#122a12)"></div><div class="film-poster-sym">S</div><div class="film-play">▶</div></div><div class="film-title">Selma</div><div class="film-year">2014</div></a>
+      </div>
+      <div class="coll-grid coll-grid-row2">
+        <a class="film-card" href="#"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#1a1208,#3d2b0a)"></div><div class="film-poster-sym">D</div><div class="film-play">▶</div></div><div class="film-title">I, Daniel Blake</div><div class="film-year">2016</div></a><a class="film-card" href="#"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#150d1a,#20122a)"></div><div class="film-poster-sym">子</div><div class="film-play">▶</div></div><div class="film-title">Son of Saul</div><div class="film-year">2015</div></a><a class="film-card" href="#"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0f0f12,#1a1a20)"></div><div class="film-poster-sym">A</div><div class="film-play">▶</div></div><div class="film-title">Quo Vadis, Aida?</div><div class="film-year">2020</div></a><a class="film-card" href="#"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0a1215,#152030)"></div><div class="film-poster-sym">殺</div><div class="film-play">▶</div></div><div class="film-title">The Act of Killing</div><div class="film-year">2012</div></a>
+      </div>
+    </div>
+
+    <!-- 06 -->
+    <div class="coll-item reveal">
+      <div class="coll-grid">
+        <div class="coll-title-card">
+          <div class="ctc-top"><div class="ctc-num">Collectie 06</div><div class="ctc-label">Sunsong Cinema</div></div>
+          <div class="ctc-bg-num">06</div>
+          <div class="ctc-bottom"><div class="ctc-name">Gimme a Break</div><div class="ctc-divider"></div><div class="ctc-genre">Seven Delightful Fun Films</div></div>
+        </div>
+        <a class="film-card" href="#"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#1a0a1a,#2a102a)"></div><div class="film-poster-sym">∞</div><div class="film-play">▶</div></div><div class="film-title">Everything Everywhere All at Once</div><div class="film-year">2022</div></a><a class="film-card" href="#"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0a1520,#1a3040)"></div><div class="film-poster-sym">♛</div><div class="film-play">▶</div></div><div class="film-title">The Full Monty</div><div class="film-year">1997</div></a><a class="film-card" href="#"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#1a1208,#3d2b0a)"></div><div class="film-poster-sym">♪</div><div class="film-play">▶</div></div><div class="film-title">Singin' in the Rain</div><div class="film-year">1952</div></a>
+      </div>
+      <div class="coll-grid coll-grid-row2">
+        <a class="film-card" href="#"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0d1a0d,#122a12)"></div><div class="film-poster-sym">L</div><div class="film-play">▶</div></div><div class="film-title">Legally Blonde</div><div class="film-year">2001</div></a><a class="film-card" href="#"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0f0a10,#1a1020)"></div><div class="film-poster-sym">P</div><div class="film-play">▶</div></div><div class="film-title">Paddington 2</div><div class="film-year">2017</div></a><a class="film-card" href="#"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0a150a,#153015)"></div><div class="film-poster-sym">森</div><div class="film-play">▶</div></div><div class="film-title">Princess Mononoke</div><div class="film-year">1997</div></a><a class="film-card" href="#"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#1a0d10,#2a1520)"></div><div class="film-poster-sym">C</div><div class="film-play">▶</div></div><div class="film-title">Clueless</div><div class="film-year">1995</div></a>
+      </div>
+    </div>
+
+    <!-- 07 -->
+    <div class="coll-item reveal">
+      <div class="coll-grid">
+        <div class="coll-title-card">
+          <div class="ctc-top"><div class="ctc-num">Collectie 07</div><div class="ctc-label">Sunsong Cinema</div></div>
+          <div class="ctc-bg-num">07</div>
+          <div class="ctc-bottom"><div class="ctc-name">Even Dwarfs Once Started Small</div><div class="ctc-divider"></div><div class="ctc-genre">Seven Short Films</div></div>
+        </div>
+        <a class="film-card" href="#"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0f0f12,#1a1a20)"></div><div class="film-poster-sym">✈</div><div class="film-play">▶</div></div><div class="film-title">La Jetée</div><div class="film-year">1962</div></a><a class="film-card" href="#"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0a1520,#1a3040)"></div><div class="film-poster-sym">⌛</div><div class="film-play">▶</div></div><div class="film-title">An Occurrence at Owl Creek Bridge</div><div class="film-year">1962</div></a><a class="film-card" href="#"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#1a1208,#3d2b0a)"></div><div class="film-poster-sym">W</div><div class="film-play">▶</div></div><div class="film-title">Wasp</div><div class="film-year">2003</div></a>
+      </div>
+      <div class="coll-grid coll-grid-row2">
+        <a class="film-card" href="#"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0d1a0d,#122a12)"></div><div class="film-poster-sym">N</div><div class="film-play">▶</div></div><div class="film-title">The New Tenants</div><div class="film-year">2009</div></a><a class="film-card" href="#"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#150d1a,#20122a)"></div><div class="film-poster-sym">二</div><div class="film-play">▶</div></div><div class="film-title">Two Distant Strangers</div><div class="film-year">2020</div></a><a class="film-card" href="#"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#1a0d0d,#2a1215)"></div><div class="film-poster-sym">S</div><div class="film-play">▶</div></div><div class="film-title">Stutterer</div><div class="film-year">2015</div></a><a class="film-card" href="#"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0a1215,#152030)"></div><div class="film-poster-sym">波</div><div class="film-play">▶</div></div><div class="film-title">The Shore</div><div class="film-year">2011</div></a>
+      </div>
+    </div>
+
+    <!-- 08 -->
+    <div class="coll-item reveal">
+      <div class="coll-grid">
+        <div class="coll-title-card">
+          <div class="ctc-top"><div class="ctc-num">Collectie 08</div><div class="ctc-label">Sunsong Cinema</div></div>
+          <div class="ctc-bg-num">08</div>
+          <div class="ctc-bottom"><div class="ctc-name">Masterpieces of Now</div><div class="ctc-divider"></div><div class="ctc-genre">The Eight Absolutely Great</div></div>
+        </div>
+        <a class="film-card" href="#"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0a1520,#1a3040)"></div><div class="film-poster-sym">T</div><div class="film-play">▶</div></div><div class="film-title">Tár</div><div class="film-year">2022</div></a><a class="film-card" href="#"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0f0f12,#1a1a20)"></div><div class="film-poster-sym">☮</div><div class="film-play">▶</div></div><div class="film-title">All Quiet on the Western Front</div><div class="film-year">2022</div></a><a class="film-card" href="#"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0d1a0d,#122a12)"></div><div class="film-poster-sym">犬</div><div class="film-play">▶</div></div><div class="film-title">The Power of the Dog</div><div class="film-year">2021</div></a>
+      </div>
+      <div class="coll-grid coll-grid-row2">
+        <a class="film-card" href="#"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#1a1208,#3d2b0a)"></div><div class="film-poster-sym">記</div><div class="film-play">▶</div></div><div class="film-title">Memoria</div><div class="film-year">2021</div></a><a class="film-card" href="#"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#150d1a,#20122a)"></div><div class="film-poster-sym">B</div><div class="film-play">▶</div></div><div class="film-title">Beau Is Afraid</div><div class="film-year">2023</div></a><a class="film-card" href="#"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#1a0d0d,#2a1215)"></div><div class="film-poster-sym">映</div><div class="film-play">▶</div></div><div class="film-title">The Fabelmans</div><div class="film-year">2022</div></a><a class="film-card" href="#"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0a1215,#152030)"></div><div class="film-poster-sym">決</div><div class="film-play">▶</div></div><div class="film-title">Decision to Leave</div><div class="film-year">2022</div></a><a class="film-card" href="#"><div class="film-poster"><div class="film-poster-bg" style="background:linear-gradient(160deg,#0f0a10,#1a1020)"></div><div class="film-poster-sym">★</div><div class="film-play">▶</div></div><div class="film-title">Asteroid City</div><div class="film-year">2023</div></a>
+      </div>
+    </div>
+
+    <div class="coll-satellite reveal">
+      <div class="sat-sun">
+        <div class="sat-orb">
+          <div class="sat-orb-ring sat-orb-ring-1"></div>
+          <div class="sat-orb-ring sat-orb-ring-2"></div>
+          <div class="sat-orb-ring sat-orb-ring-3"></div>
+          <div class="sat-orb-core">☀</div>
+        </div>
+      </div>
+      <div class="sat-content">
+        <div class="sat-title">Sunsong<br>Satellite</div>
+        <div class="sat-desc">A film that dares to leave all orbits behind and head straight for the sun — sublime in a way that is utterly unclassifiable. Our selection.</div>
+      </div>
+      <div class="sat-film">
+        <a class="film-card" href="#">
+          <div class="film-poster">
+            <div class="film-poster-bg" style="background:linear-gradient(160deg,#1a1000,#3a2800)"></div>
+            <div class="sat-film-sym">☀</div>
+            <div class="film-play">▶</div>
+          </div>
+          <div class="film-title">This Week's Film</div>
+          <div class="film-year">2024</div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="manifesto" id="about">
+  <div class="manifesto-inner">
+    <div class="manifesto-label reveal">Sunsong Cinema</div>
+    <div class="manifesto-text reveal">
+      <p>We select films that matter. They <span class="hl">change lives.</span> They connect. They help you reconnect with those around you, and with yourself. They nourish the love for the world, and the love for everything the world is not yet. They blissfully do nothing at all — pure delight and pleasure. They are political. They cuddle. They embrace. They make love. They commemorate genocides and also already the first smile of your great-great-grandchild, years from now. They polarize. They unite. They destabilize. They stabilize. A river is nothing compared to them. They are heartbreaking and complete as a lotus flower. They are unforgettable, because they help us forget and forgive. They enrage and set us on fire. They help us begin anew, because they help us leave things behind. They are historical, because they are signs of our times. They do what movies should do: <span class="hl">move.</span></p>
+      <p>Sunsong Cinema is your carefully curated selection. Out of ten thousand new films every year, we select those that have proven to be extraordinarily beneficial. We simply want to pass them on.</p>
+      <div class="manifesto-closing">Enjoy.</div>
+    </div>
+  </div>
+</section>
+
+<section class="share-section" id="share">
+  <div class="share-inner">
+    <div class="share-eyebrow">Pass It On</div>
+    <h2 class="share-title">Send a film to someone<br>you <em>love.</em></h2>
+    <p class="share-sub">A film you love is a gift. Share it with someone who matters — via WhatsApp, Signal, email, or any channel you choose.</p>
+    <div class="share-input-wrap">
+      <div class="share-input-label">Which film do you want to share?</div>
+      <input class="share-input" type="text" id="filmTitle" placeholder="e.g. Parasite, Capernaum, The Lives of Others...">
+    </div>
+    <div class="share-channels">
+      <button class="share-ch" onclick="shareVia('whatsapp')"><span class="share-ch-icon">💬</span><span class="share-ch-name">WhatsApp</span></button>
+      <button class="share-ch" onclick="shareVia('signal')"><span class="share-ch-icon">🔒</span><span class="share-ch-name">Signal</span></button>
+      <button class="share-ch" onclick="shareVia('telegram')"><span class="share-ch-icon">✈️</span><span class="share-ch-name">Telegram</span></button>
+      <button class="share-ch" onclick="shareVia('email')"><span class="share-ch-icon">✉️</span><span class="share-ch-name">Email</span></button>
+      <button class="share-ch" onclick="shareVia('twitter')"><span class="share-ch-icon">𝕏</span><span class="share-ch-name">X / Twitter</span></button>
+      <button class="share-ch" onclick="shareVia('facebook')"><span class="share-ch-icon">f</span><span class="share-ch-name">Facebook</span></button>
+    </div>
+    <div class="share-more">
+      <button class="share-more-btn" onclick="shareVia('sms')">📱 SMS</button>
+      <button class="share-more-btn" onclick="shareVia('instagram')">📷 Instagram</button>
+      <button class="share-more-btn" onclick="shareVia('linkedin')">in LinkedIn</button>
+      <button class="share-more-btn" onclick="nativeShare()">↑ More options</button>
+    </div>
+    <div class="copy-link-row">
+      <input class="copy-link-input" id="shareLinkInput" readonly value="https://sunsongcinema.com">
+      <button class="copy-link-btn" id="copyLinkBtn" onclick="copyLink()">Copy Link</button>
+    </div>
+    <div class="share-success" id="shareSuccess"></div>
+  </div>
+</section>
+
+<section class="find-section" id="find">
+  <div class="find-inner reveal">
+    <div class="find-eyebrow">Discover</div>
+    <h2 class="find-title">What kind of film do you<br>want to <em>see?</em></h2>
+    <p class="find-sub">Describe your mood, a theme, a country, a feeling, an actor or actress, a director, or an emotion, and we will propose two films made just for you. Human-made films for human-made humans, while supplies last.</p>
+    <a href="find.html" class="btn-primary" style="margin:0 auto;display:inline-flex">Find My Two Films →</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">SUNSONG CINEMA</div>
+  <div class="footer-tagline">"Film is like love, give it and it's a gift that keeps giving."</div>
+  <div class="footer-links"><a href="#about">About</a><a href="#share">Share</a><a href="find.html">Find a Film</a></div>
+</footer>
+
+<script>
+window.addEventListener('scroll',function(){
+  document.getElementById('hdr').classList.toggle('scrolled',window.scrollY>60);
+});
+var obs=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('visible')});
+},{threshold:0.08});
+document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el)});
+
+function gf(){return document.getElementById('filmTitle').value.trim()||'a film I love'}
+function gt(f){return 'I want to share '+f+' with you. Film is like love — give it and it\'s a gift that keeps giving. Find it on Sunsong Cinema: https://sunsongcinema.com'}
+
+function shareVia(ch){
+  var f=gf(),t=gt(f),u='https://sunsongcinema.com',s='';
+  if(ch==='whatsapp')s='https://wa.me/?text='+encodeURIComponent(t);
+  else if(ch==='signal'){navigator.clipboard.writeText(t).catch(function(){});showOk('Copied for Signal! Open Signal and paste.');return}
+  else if(ch==='telegram')s='https://t.me/share/url?url='+encodeURIComponent(u)+'&text='+encodeURIComponent('I want to share '+f+' with you.');
+  else if(ch==='email')s='mailto:?subject='+encodeURIComponent('A film for you: '+f)+'&body='+encodeURIComponent(t);
+  else if(ch==='twitter')s='https://twitter.com/intent/tweet?text='+encodeURIComponent('I want to share '+f+' with you. Film is like love.')+'&url='+encodeURIComponent(u);
+  else if(ch==='facebook')s='https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(u);
+  else if(ch==='sms')s='sms:?body='+encodeURIComponent(t);
+  else if(ch==='instagram'){navigator.clipboard.writeText(t).catch(function(){});showOk('Copied! Open Instagram and paste.');return}
+  else if(ch==='linkedin')s='https://www.linkedin.com/sharing/share-offsite/?url='+encodeURIComponent(u);
+  if(s)window.open(s,'_blank');
+}
+function nativeShare(){
+  var f=gf(),t=gt(f);
+  if(navigator.share){navigator.share({title:'A film for you: '+f,text:t,url:'https://sunsongcinema.com'}).catch(function(){});}
+  else{navigator.clipboard.writeText(t).catch(function(){});showOk('Copied! Paste it anywhere to share.');}
+}
+function copyLink(){
+  var f=gf(),t=gt(f);
+  navigator.clipboard.writeText(t).catch(function(){var i=document.getElementById('shareLinkInput');i.select();document.execCommand('copy')});
+  var b=document.getElementById('copyLinkBtn');b.textContent='Copied!';setTimeout(function(){b.textContent='Copy Link'},2000);
+  showOk('Copied! Paste it to share this film.');
+}
+function showOk(msg){
+  var el=document.getElementById('shareSuccess');el.textContent='✓ '+msg;el.classList.add('visible');
+  setTimeout(function(){el.classList.remove('visible')},4000);
+}
+</script>
+</body>
+</html>
